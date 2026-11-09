@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+node scripts/check-no-competitors.mjs && node scripts/check-copy.mjs
