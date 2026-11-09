@@ -18,3 +18,7 @@ Pending. Q3 has partial evidence, recorded in PLATFORM_PROBE.md (probe 1).
 ## Friction report
 
 Pending.
+
+## Pre-registration record
+
+The five questions above were committed in 418c16391402a57de03f8143bdf0f001730ccd70 before any of them was run.
