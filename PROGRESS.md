@@ -11,7 +11,7 @@ Updated 2026-11-09 (submission closes 2026-11-10 17:00 UTC).
 - Finding: the instruction's Walrus Memory package and registry IDs are the older deployment. The relayer's current IDs are used. See docs/PLATFORM_PROBE.md.
 
 ## Written but not verified
-- `move/eranos` circle module and 25 Move tests. The Sui CLI is not installed in this container (download was blocked), so nothing has been compiled or run. Rung A or B is undecided.
+- Move: 24 tests pass on Sui CLI 1.60.1 (Rung A, links to mainnet memwal 0xe7c16f). Not yet published.
 
 ## Blocked on Kinnoski
 - GitHub repo URL to push to; git author email (currently the 0xkinno noreply address).

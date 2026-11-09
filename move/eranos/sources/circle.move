@@ -148,7 +148,7 @@ public fun payout<T>(c: &mut Circle<T>, round: u64, ctx: &mut TxContext) {
     let to = c.order[round];
     let amount = c.contribution * c.members.length();
     let coin = coin::from_balance(balance::split(&mut c.pot, amount), ctx);
-    c.paid_out[round] = true;
+    *c.paid_out.borrow_mut(round) = true;
     transfer::public_transfer(coin, to);
     event::emit(PaidOut { circle: object::id(c), cycle: c.cycle, round, to, amount });
 }

@@ -3,7 +3,7 @@ module eranos::circle_tests;
 
 use eranos::circle::{Self, Circle};
 use memwal::account::{Self as mw, MemWalAccount};
-use sui::clock::{Self, Clock};
+use sui::clock;
 use sui::coin::{Self, Coin};
 use sui::test_scenario::{Self as ts, Scenario};
 

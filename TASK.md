@@ -39,8 +39,8 @@ Ask Kinnoski before every item marked **(ASK)**.
 - [ ] Upstash Redis connected
 
 ## Phase 4. Move package
-- [ ] `move/eranos` with `circle.move` (Part 6.1), generic over coin type
-- [ ] All Move tests (happy path + every error constant), `sui move test` green; count recorded
+- [x] `move/eranos` with `circle.move` (Part 6.1), generic over coin type
+- [x] All Move tests (happy path + every error constant), `sui move test` green; count recorded: 24 passed
 - [ ] Publish to mainnet with keeper key (ASK), record package ID and digest in EVIDENCE.md
 - [ ] GitHub Action runs `sui move test` on push
 
