@@ -50,6 +50,16 @@ export class TatumSui {
       sleep: opts.sleep ?? ((ms) => new Promise((r) => setTimeout(r, ms))),
     };
     this.client = new SuiGraphQLClient({ url: this.o.url, network: "mainnet", fetch: this.routedFetch });
+    // The SDK reads the chain id from checkpoint 0, which the gateway has pruned. The root field is authoritative and cheap.
+    let chainId: string | null = null;
+    (this.client.core as unknown as { getChainIdentifier: () => Promise<{ chainIdentifier: string }> }).getChainIdentifier = async () => {
+      if (!chainId) {
+        const r = (await this.client.query({ query: "query ChainId { chainIdentifier }" } as never)) as { data?: { chainIdentifier?: string } };
+        chainId = r.data?.chainIdentifier ?? null;
+      }
+      if (!chainId) throw new Error("chain identifier unavailable");
+      return { chainIdentifier: chainId };
+    };
   }
 
   private routedFetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
