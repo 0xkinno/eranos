@@ -1,0 +1,9 @@
+[package]
+name = "eranos"
+edition = "2024"
+
+[dependencies]
+memwal = { local = "../memwal_iface" }
+
+[addresses]
+eranos = "0x0"

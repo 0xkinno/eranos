@@ -1,0 +1,12 @@
+export const MEMWAL_PKG = process.env.MEMWAL_PKG ?? "0xcee7a6fd8de52ce645c38332bde23d4a30fd9426bc4681409733dd50958a24c6";
+export const MEMWAL_REGISTRY = process.env.MEMWAL_REGISTRY ?? "0x0da982cefa26864ae834a8a0504b904233d49e20fcc17c373c8bed99c75a7edd";
+export const MEMWAL_RELAYER = process.env.MEMWAL_SERVER_URL ?? "https://relayer.memory.walrus.xyz";
+export const USDC = process.env.USDC_TYPE ?? "0xdba34672e30cb065b1f93e3ab55318768fd6fef66c15942c9f7cb846e2f900e7::usdc::USDC";
+export const USDC_DECIMALS = 6;
+export const ERANOS_PKG = process.env.ERANOS_PKG ?? "";
+export const SUI_CLOCK = "0x6";
+export const TATUM_GRAPHQL = process.env.TATUM_SUI_GRAPHQL ?? "https://sui-mainnet.gateway.tatum.io/graphql";
+export const PUBLIC_FULLNODE = "https://fullnode.mainnet.sui.io";
+export const MAX_MEMBERS = 19;
+export const NAMESPACES = { known: "known", heard: "heard", keeper: "keeper" } as const;
+export type Namespace = (typeof NAMESPACES)[keyof typeof NAMESPACES];

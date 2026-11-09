@@ -1,0 +1,10 @@
+# Interface stub of the Walrus Memory account module. It exists only so eranos can compile against the
+# public getters of the mainnet package. Nothing in this folder is published.
+# Its address is the mainnet package that defines these types (verified at G5 via Tatum: see PLATFORM_PROBE.md).
+[package]
+name = "memwal"
+edition = "2024"
+published-at = "0xcee7a6fd8de52ce645c38332bde23d4a30fd9426bc4681409733dd50958a24c6"
+
+[addresses]
+memwal = "0xcee7a6fd8de52ce645c38332bde23d4a30fd9426bc4681409733dd50958a24c6"
