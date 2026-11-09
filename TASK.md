@@ -24,9 +24,9 @@ Ask Kinnoski before every item marked **(ASK)**.
 
 ## Phase 2. G5 platform probe (real calls, results in `PLATFORM_PROBE.md`)
 - [ ] Tatum GraphQL: checkpoint, object read, events query, transaction by digest, simulate (ASK for key)
-- [ ] Tatum Data API: USDC rate in MXN, USD, NGN, GHS, GBP, INR
-- [ ] Tatum address screening on Sui: works or not (record)
-- [ ] Tatum notifications for Sui addresses: available or not (record)
+- [x] Tatum Data API: USDC rate in MXN, USD, NGN, GHS, GBP, INR
+- [x] Tatum address screening on Sui: works or not (record)
+- [x] Tatum notifications for Sui addresses: available or not (record)
 - [ ] Read MemWal mainnet registry and an existing `MemWalAccount` via Tatum; record the defining package address of the type
 - [x] MemWal relayer `health()`, `compatibility()` from server
 - [ ] Prove a member-signed request through `/api/mw/*` proxy (local first, then Vercel)
@@ -46,7 +46,7 @@ Ask Kinnoski before every item marked **(ASK)**.
 
 ## Phase 5. Sui and Tatum libraries
 - [x] `lib/tatum/sui.ts` (throttle, counters, 402 fallback visible, typed helpers) + tests
-- [ ] `lib/tatum/data.ts` (rates, screening if supported) + tests
+- [x] `lib/tatum/data.ts` (rates, screening if supported) + tests
 - [x] `lib/sui/multisig.ts` (steward address, verify partials, combine) + tests with 3 test keypairs
 - [x] `lib/sui/ptb.ts` (create circle, join, leave, start cycle, contribute_for, payout) + build tests
 - [x] `lib/sui/sponsor.ts` (sponsored gas with per-member cap) + tests

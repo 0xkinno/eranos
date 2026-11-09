@@ -16,15 +16,18 @@ Source: `GET https://relayer.memory.walrus.xyz/config`.
 
 ## Probe 3: Sui GraphQL (2026-11-09)
 
-- `https://sui-mainnet.gateway.tatum.io/graphql` answered `chainIdentifier` with no API key in this container. Behaviour with a key and credit accounting: pending key.
+- `https://sui-mainnet.gateway.tatum.io/graphql` answered `chainIdentifier` with no API key, and with the key supplied, `getBalance` for 7 wallets (18 calls counted by our client). Credit accounting per call is not exposed in responses; the Tatum dashboard is the source.
 - The public endpoint `https://graphql.mainnet.sui.io/graphql` serves the same schema. `SuiGraphQLClient` object reads, `simulateTransaction` and `executeTransaction` exist on the schema.
 - The `/api/status` route measured both the Sui GraphQL checkpoint read and the relayer health call from the Next.js server.
 
+## Probe 4: Tatum Data API (2026-11-09, with key)
+
+- `GET /v4/data/rate/symbol?symbol=USDC&basePair=X` works for MXN 18.52, USD 0.9994, NGN 1346.22, GHS 11.68, GBP 0.7437, INR 93.55 (source CoinGecko).
+- Address screening: `GET /v3/security/address/{address}` returns `{"status":"valid"}` for a fresh 32-byte Sui address, rejects `0x123` for length and a non-address string as unrecognised on every chain. Format is accepted. Whether Tatum's malicious-address sources actually cover Sui is unproven, so Eranos words a pass as "not listed", never "verified safe". Flagged and not-flagged counts will be reported once real admissions run.
+- Notifications: `POST /v4/subscription` `ADDRESS_EVENT` lists its supported chains in the validation error. Sui is not among them. Notifications for Sui addresses are not available, so contribution detection uses the scheduled tick.
+
 ## Pending
 
-- Tatum Data API rates (USDC in MXN, USD, NGN, GHS, GBP, INR): needs key.
-- Tatum address screening on Sui: needs key.
-- Tatum notifications for Sui addresses: needs key.
 - Member-signed request through `/api/mw/*` on mainnet: needs a funded account. The proxy exists and forwards `health`, rejects non-allowlisted paths with 404 (tested locally).
 - Remember-to-recall lag over 30 writes and points per round: needs a funded account.
-- Move Rung A or B decision: needs the Sui CLI to compile.
+- Move Rung decision: Rung A. The module compiles against an interface stub and links to `0xe7c16f...::account` (verified in the compiled bytecode), 24 Move tests pass. Mainnet publish will confirm the verifier accepts the link.
