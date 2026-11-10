@@ -25,7 +25,8 @@ export function setEnv(key: string, value: string) {
   process.env[key] = value;
 }
 
-export type Outcome = { digest: string; success: boolean; error?: string; tx: Awaited<ReturnType<typeof T.getTransaction>>["tx"] };
+export type Outcome = { digest: string; success: boolean; error?: string; // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  tx: any };
 async function finish(res: Awaited<ReturnType<typeof T.execute>>): Promise<Outcome> {
   const r = res.$kind === "Transaction" ? res.Transaction : res.FailedTransaction;
   return { digest: r.digest, success: res.$kind === "Transaction" && r.status.success, error: r.status.success ? undefined : JSON.stringify(r.status.error), tx: r };

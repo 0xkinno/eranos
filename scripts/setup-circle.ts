@@ -7,7 +7,7 @@ import { deriveMemberKey } from "@/lib/memory/derive-key";
 import { MemWal } from "@mysten-incubation/memwal";
 
 const PKG = process.env.ERANOS_PKG!;
-const created = (o: Awaited<ReturnType<typeof execSteward>>, sub: string) => (o.tx.effects?.changedObjects ?? []).find((c) => c.idOperation === "Created" && (o.tx.objectTypes?.[c.objectId] ?? "").includes(sub))?.objectId;
+const created = (o: Awaited<ReturnType<typeof execSteward>>, sub: string) => (o.tx.effects?.changedObjects ?? []).find((c: { idOperation: string; objectId: string }) => c.idOperation === "Created" && (o.tx.objectTypes?.[c.objectId] ?? "").includes(sub))?.objectId;
 
 async function account() {
   if (process.env.DEMO_MEMORY_ACCOUNT_ID) return console.log("account exists", process.env.DEMO_MEMORY_ACCOUNT_ID);

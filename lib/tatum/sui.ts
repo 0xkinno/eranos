@@ -126,9 +126,24 @@ export class TatumSui {
     const keys = ((j.delegate_keys as Array<Record<string, unknown>>) ?? []).map((k) => ({ publicKey: k.public_key as unknown, suiAddress: k.sui_address as string, label: k.label as string }));
     return { type: o.type, owner: j.owner as string, delegateKeys: keys, accessCounterVersion: Number(j.access_counter_version ?? 0), active: Boolean(j.active), raw: j };
   }
-  listEvents(eventType: string, opts: { cursor?: string; limit?: number } = {}) {
-    return this.cached(`ev:${eventType}:${opts.cursor ?? ""}`, 30_000, () =>
-      this.client.core.listEvents({ filter: { eventType }, limit: opts.limit ?? 50, ...(opts.cursor ? { after: opts.cursor } : {}) }));
+  /** Events by fully qualified type. The gateway prunes old history, so an afterCheckpoint bound is required. Pages are followed. */
+  async queryEvents(type: string, afterCheckpoint: number, maxPages = 10) {
+    return this.cached(`ev:${type}:${afterCheckpoint}`, 15_000, async () => {
+      const out: { digest: string; timestampMs: number; json: Record<string, string> }[] = [];
+      let after: string | null = null;
+      for (let i = 0; i < maxPages; i++) {
+        const r = (await this.client.query({
+          query: `query Events($type: String!, $cp: UInt53!, $after: String) { events(first: 50, after: $after, filter: { type: $type, afterCheckpoint: $cp }) { pageInfo { hasNextPage endCursor } nodes { transaction { digest } contents { json } timestamp } } }`,
+          variables: { type, cp: afterCheckpoint, after },
+        } as never)) as { data?: { events?: { pageInfo: { hasNextPage: boolean; endCursor: string }; nodes: { transaction: { digest: string }; contents: { json: Record<string, string> }; timestamp: string }[] } }; errors?: { message: string }[] };
+        const ev = r.data?.events;
+        if (!ev) throw new Error(`events query failed: ${JSON.stringify(r.errors ?? r).slice(0, 200)}`);
+        for (const n of ev.nodes) out.push({ digest: n.transaction.digest, timestampMs: Date.parse(n.timestamp), json: n.contents.json });
+        if (!ev.pageInfo.hasNextPage) break;
+        after = ev.pageInfo.endCursor;
+      }
+      return out;
+    });
   }
   /** Verification source of truth: status, sender, balance changes, checkpoint time, events. Never cached. */
   async getTransaction(digest: string) {
