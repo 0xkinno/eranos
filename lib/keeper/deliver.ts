@@ -20,7 +20,7 @@ export async function deliver(c: DeliverCtx) {
   const kv = store(); const t = tatum(); const now = c.now ?? Date.now();
   const circle = (await t.getCircle(c.circleId)).json as { cycle: string; cycle_start_ms: string; round_ms: string; members: string[]; order: string[]; paid_out: boolean[] };
   const cycle = Number(circle.cycle), start = Number(circle.cycle_start_ms), rms = Number(circle.round_ms);
-  if (!cycle || !start) return { sent: 0, turns: 0 };
+  if (!cycle || !start) return { sent: 0, turns: 0, skipped: "no active cycle" };
   const round = Math.min(Math.floor((now - start) / rms), circle.members.length - 1);
   const [contribs, payouts] = await Promise.all([t.queryEvents(`${c.pkg}::circle::Contributed`, c.startCheckpoint), t.queryEvents(`${c.pkg}::circle::PaidOut`, c.startCheckpoint)]);
   const paid = new Set(contribs.filter((e) => e.json.circle === c.circleId && Number(e.json.cycle) === cycle && Number(e.json.round) === round).map((e) => e.json.member));
@@ -40,7 +40,10 @@ export async function deliver(c: DeliverCtx) {
   const planKey = `plan:${cycle}:${round}`; let plan = JSON.parse((await kv.get(planKey)) ?? "null") as ReturnType<typeof buildPlan> | null;
   if (!plan || now - ((plan as unknown as { at: number }).at ?? 0) > 5 * 60_000) {
     const open = start + round * rms;
-    plan = buildPlan({ members: circle.members, roundOpenMs: open, roundDeadlineMs: open + rms, memories: await c.readMemories() });
+    const memories = await c.readMemories();
+    // an empty read means the relayer throttled us, not that the circle has no memory: never plan or send from it
+    if (memories.length === 0) return { sent, turns, skipped: "memory read returned nothing, will retry next tick" };
+    plan = buildPlan({ members: circle.members, roundOpenMs: open, roundDeadlineMs: open + rms, memories });
     (plan as unknown as { at: number }).at = now; await kv.set(planKey, JSON.stringify(plan));
   }
   const sentKeys = new Set<string>();
