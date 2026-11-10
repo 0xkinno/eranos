@@ -2,18 +2,20 @@
 
 Updated 2026-11-09 (submission closes 2026-11-10 17:00 UTC).
 
-## Done and verified (mainnet, 2026-11-10)
-- Contract published, circle and Walrus Memory account created by the 2 of 3 steward multisig, 5 members joined with money and memory in one transaction each, cycle 1 started, contributions with sponsored gas, two x402 agent payments, keeper payouts, keeper verification through Tatum.
-- P2 (admit without memory key refused), P5 (early payout refused), P9 (heard fact changes nothing until the member signs, then moves order 3 to 1), P10 (keeper refuses a claimed payment Tatum cannot find).
-- Member-signed memory writes through the `/api/mw` proxy verify on the managed relayer.
-- Vercel deployment at https://eranos.vercel.app. Responsive plus axe suite: 50 of 57 pass on the deployed site, all 7 failures are the memory page without the keeper key on Vercel; 16 of 16 pass locally at two viewports.
-- 62 Vitest tests, 24 Move tests.
+## Done and verified (mainnet and the deployed site, 10 Nov 2026)
+- Contract published; memory account and circle created by the 2 of 3 steward multisig; 5 members joined (money and memory in one transaction each); cycle 1 completed with 5 of 5 payouts to the scheduled members; one member left (access counter 0 to 1, key refused by the relayer); cycle 2 started from the planner's memory-driven order, signed by two stewards.
+- Sponsored contributions, 2 x402 agent payments, 1 payment from a browser wallet on the deployed site, keeper verification through Tatum, memory writes by members through the proxy.
+- P1 to P11 recorded in docs/PROOF.md with their limits. P12 counted by script. P13 not recorded.
+- Redesign in Sui light blue with Framer Motion, hand-drawn SVG scene, self-hosted fonts; Playwright inspection of fonts, SVG placement, overflow and contrast on the deployed site (docs/UI_INSPECTION.md).
+- Vitest and Move tests green. Browser suites: see TASK.md.
 
 ## Blocked on Kinnoski
-- KEEPER_SUI_KEY and KEEPER_MEMWAL_KEY on Vercel (planner, scribe, memory page, sponsored UI payment, cron tick need them).
-- GitHub secrets ERANOS_URL and CRON_SECRET for the unattended tick (P13).
-- Upstash Redis (optional): proposals and idempotency state are in memory on Vercel until then.
-- Publishing the blog post, the X post, the form submission.
+- GitHub secrets ERANOS_URL and CRON_SECRET (P13, unattended tick).
+- Upstash Redis URL and token (proposals and idempotency state persist only in memory on Vercel until then).
+- Publishing the blog post and the X post, recording the demo video, submitting the form.
 
-## Not done yet
-Leave proof (P6, P7) and cycle 2 (need cycle 1 to finish, about 08:48 UTC), P8 file, portable run (P11), deployed wallet E2E including the UI payment, Playwright wallet trace, demo video, blog publication, red-team rounds, README final render with leave and P-results.
+## Not done
+30-write recall-lag study and points per round; a separate Seal key request after leaving; reminder delivery to phones; five-agent external red-team round; Tatum AI Builder award (not built with ai.tatum.io, not claimed).
+
+## Self-judged scores (builder's view, not independent)
+Walrus and Tatum integration: strong on depth, with real limits listed. Technical quality: tests, CI gates, mainnet proof, honest misses. Creativity: a group-owned memory with enforced money and memory membership. Presentation: README, live proof, 60-second walk, guided tour; demo video still to record.

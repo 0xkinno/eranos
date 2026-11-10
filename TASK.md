@@ -30,7 +30,7 @@ Ask Kinnoski before every item marked **(ASK)**.
 - [x] Read MemWal mainnet registry and an existing `MemWalAccount` via Tatum; record the defining package address of the type
 - [x] MemWal relayer `health()`, `compatibility()` from server
 - [x] Prove a member-signed request through `/api/mw/*` proxy (local first, then Vercel)
-- [x] Measure remember-to-recall visibility lag (30 writes, p50/p95) and points per round
+- [ ] Measure remember-to-recall visibility lag (30 writes, p50/p95) and points per round
 - [x] Decide Move Rung A (dependency on memwal) or Rung B; record why
 
 ## Phase 3. Deploy skeleton (G7 step 1)
@@ -70,55 +70,55 @@ Ask Kinnoski before every item marked **(ASK)**.
 - [ ] `ask` via relayer `POST /api/ask` for "what did we agree?" with cited lines
 
 ## Phase 8. Contributions, x402 and payouts
-- [ ] Pay my round in the UI (member signs, sponsored gas, verified via Tatum)
+- [x] Pay my round in the UI (member signs, sponsored gas, verified via Tatum)
 - [x] x402 v2 facilitator logic + tests (HTTP route not yet written) (exact echo, simulate, event check, idempotency, every errorReason)
 - [x] Standing-order agent script; two mainnet agent payments recorded (ASK)
 - [x] Keeper tick: verify events via Tatum, write outcomes, call payout when full
-- [ ] P4 and P5 recorded (payouts match order; one refused payout attempt decoded)
+- [x] P4 and P5 recorded (payouts match order; one refused payout attempt decoded)
 - [x] Fault switch `ERANOS_SABOTAGE=keeper-claims-unpaid`: refusal test + recorded run (P10)
 
 ## Phase 9. Learning loop (the Best Walrus Memory centre)
 - [x] `lib/planner/reminders.ts` + tests (payday facts, EWMA lateness, quiet hours, budget of 2)
 - [x] `lib/planner/order.ts` + tests (reasons with cited memory IDs)
-- [ ] Memory on / off switch on circle home and landing section, real data
-- [ ] P8: before/after for every demo member recorded in PROOF.md
+- [x] Memory on / off switch on circle home and landing section, real data
+- [x] P8: before/after for every demo member recorded in PROOF.md
 - [x] P9: false `heard` fact does not change the plan until confirmed, then does
-- [ ] Cycle 1 completes on mainnet; planner proposal for cycle 2 signed by stewards (ASK)
+- [x] Cycle 1 completes on mainnet; planner proposal for cycle 2 signed by stewards (ASK)
 
 ## Phase 10. Leave and portability
-- [ ] Leave PTB for one member between cycles (ASK); access counter before/after via Tatum
-- [ ] `scripts/prove-leave.ts`: same key before and after, relayer and Seal results recorded (P6, P7)
-- [ ] `scripts/portable.ts` (P11) with only member key and account ID
+- [x] Leave PTB for one member between cycles (ASK); access counter before/after via Tatum
+- [x] `scripts/prove-leave.ts`: same key before and after, relayer and Seal results recorded (P6, P7)
+- [x] `scripts/portable.ts` (P11) with only member key and account ID
 - [ ] Unattended GitHub Actions tick recorded (P13)
 
 ## Phase 11. Proof surfaces
 - [x] `scripts/facts.ts` writes `docs/FACTS.json` from live reads; CI fails on README mismatch
 - [x] `/api/stats` live recompute; `/proof` page; membership agreement check live via Tatum
 - [x] `/judge` 60-second walk with preloaded real circle, no wallet needed
-- [ ] `EVIDENCE.md`, `PROOF.md` (P1 to P13, both error directions, misses), `SDK_SURFACE.md` with file:line
+- [x] `EVIDENCE.md`, `PROOF.md` (P1 to P13, both error directions, misses), `SDK_SURFACE.md` with file:line
 
 ## Phase 12. UI (Part 8) after the action path works
 - [x] `DESIGN.md` written first (tokens, fonts, mark, signature motion, ornament)
-- [ ] SVG assets: ring-hero, folds, mark, icon set, og image
+- [x] SVG assets: ring-hero, folds, mark, icon set, og image
 - [x] Square-capsule navbar with Connect wallet and power-icon disconnect
-- [ ] Landing page, all 8 sections, real numbers from FACTS
+- [x] Landing page, all 8 sections, real numbers from FACTS
 - [x] App screens: my circles, circle home, memory, stewards, join, proof, judge
 - [x] Designed refusal, waiting and fallback states
-- [ ] Cursor glow cards, reveals, signature motion, reduced-motion respected
-- [ ] Guided tour (7 steps) with render mode
+- [x] Cursor glow cards, reveals, signature motion, reduced-motion respected
+- [x] Guided tour (7 steps) with render mode (keyboard flow tested; the video is not recorded yet)
 
 ## Phase 13. Test and polish
-- [ ] Playwright responsive suite on 7 viewports, overlap checks, axe WCAG 2.2 AA, zero console errors
-- [ ] Playwright wallet E2E (test wallet): connect, derive key, join, steward sign, pay, disconnect
+- [x] Playwright responsive suite on 7 viewports, overlap checks, axe WCAG 2.2 AA, zero console errors
+- [x] Playwright wallet E2E (test wallet): connect, derive key, disconnect, pay on the deployed site, non-member refusal (join request and steward sign run through the API, not the browser wallet; traces were run off)
 - [x] Vitest all green; counts into FACTS
-- [ ] Screenshots captured into `docs/images/` (hero banner + 2x2)
+- [x] Screenshots captured into `docs/images/` (hero banner + 2x2)
 
 ## Phase 14. Story, review, submission
-- [ ] README in Part 9 order, house-style test green, numbers from FACTS
+- [x] README in Part 9 order, house-style test green, numbers from FACTS
 - [ ] Lane check round two (Discord, X, gallery); adjust README lead if a rival appears
-- [ ] Red-team rounds until clean; `REDTEAM_LOG.md`
+- [ ] Red-team rounds until clean; `REDTEAM_LOG.md` (one builder-run round done and logged, no independent five-agent round)
 - [ ] Demo video recorded via tour render mode (2:30 to 3:30)
-- [ ] `docs/BLOG.md` drafted; Kinnoski publishes on Medium or dev.to (ASK); link added
-- [ ] `docs/X_POST.md` drafted; Kinnoski posts (ASK)
-- [ ] `SUBMISSION_TOTALRECALL.md` filled field by field (Tatum account ID, MEMWAL_AGENT_ID = keeper delegate public key)
+- [ ] `docs/BLOG.md` drafted; Kinnoski publishes (drafted, not published) on Medium or dev.to (ASK); link added
+- [ ] `docs/X_POST.md` drafted; Kinnoski posts (drafted, not posted) (ASK)
+- [ ] `SUBMISSION_TOTALRECALL.md` filled (filled except live form field names, blog URL and video) field by field (Tatum account ID, MEMWAL_AGENT_ID = keeper delegate public key)
 - [ ] Kinnoski submits by 16:00 WAT on 10 Nov (ASK); commit tagged `submission`; deployment frozen
