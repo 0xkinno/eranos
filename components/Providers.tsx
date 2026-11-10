@@ -7,12 +7,11 @@ function make() {
   return createDAppKit({
     networks: ["mainnet"], defaultNetwork: "mainnet", autoConnect: true,
     // chain reads from the browser go through our server, which calls Tatum with the key
-    createClient: () => new SuiGraphQLClient({ url: `${window.location.origin}/api/sui`, network: "mainnet" }),
+    createClient: () => new SuiGraphQLClient({ url: typeof window === "undefined" ? "https://graphql.mainnet.sui.io/graphql" : `${window.location.origin}/api/sui`, network: "mainnet" }),
     slushWalletConfig: null,
   });
 }
 export function Providers({ children }: { children: ReactNode }) {
-  const [kit] = useState(() => (typeof window === "undefined" ? null : make()));
-  if (!kit) return <>{children}</>;
+  const [kit] = useState(() => make());
   return <DAppKitProvider dAppKit={kit as never}>{children}</DAppKitProvider>;
 }
