@@ -268,10 +268,10 @@ Move tests need the Sui CLI: `cd move/eranos && sui move test`. Deploy: link the
 
 ## Disclosures
 
-Built with AI coding assistants. Lucía is a fictional composite. The demo circle's members are the builder's own wallets, and each member's stated payday is an input they wrote with their own key. The replay set is synthetic and labelled. Funds are capped and the round length is 20 minutes for the demo.
+Built with AI coding assistants (Claude Code for the shipped code, plus a Tatum AI Builder shell generated from the prompt in docs/AI_BUILDER_PROMPT.md). Lucía is a fictional composite. The demo circle's members are the builder's own wallets, and each member's stated payday is an input they wrote with their own key. The replay set is synthetic and labelled. Funds are capped and the round length is 20 minutes for the demo.
 
 ## Docs
 
 [TASK.md](TASK.md), [PROGRESS.md](PROGRESS.md), [docs/MILESTONE.md](docs/MILESTONE.md), [docs/EVIDENCE.md](docs/EVIDENCE.md), [docs/PROOF.md](docs/PROOF.md), [docs/FINDINGS.md](docs/FINDINGS.md), [docs/SDK_SURFACE.md](docs/SDK_SURFACE.md), [docs/PLATFORM_PROBE.md](docs/PLATFORM_PROBE.md), [DESIGN.md](DESIGN.md). Licence MIT.
 
-The optional Tatum AI Builder prompt is kept in [docs/AI_BUILDER_PROMPT.md](docs/AI_BUILDER_PROMPT.md). Eranos was not built primarily with ai.tatum.io and does not claim that award.
+**Tatum AI Builder:** entered as the optional item, with a plain disclosure in [docs/AI_BUILDER_PROMPT.md](docs/AI_BUILDER_PROMPT.md). The prompt was run on ai.tatum.io and produced a project shell. The shipped product was built with Claude Code, so we do not claim it was built primarily with ai.tatum.io.

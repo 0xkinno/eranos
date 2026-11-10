@@ -15,10 +15,32 @@ class Upstash implements KV {
   async get(k: string) { return (await this.cmd("GET", k)).result; }
   async set(k: string, v: string) { await this.cmd("SET", k, v); }
 }
+/** Vercel Blob (private store) as a key-value store. Every write is a new versioned object and a read takes the newest one from list(), which is strongly consistent. */
+class BlobKV implements KV {
+  kind = "vercel-blob";
+  private dir = (k: string) => `eranos-kv/${encodeURIComponent(k)}/`;
+  async get(k: string) {
+    const { list, get } = await import("@vercel/blob");
+    const r = await list({ prefix: this.dir(k), limit: 1000 });
+    const newest = r.blobs.sort((a, b) => (a.pathname < b.pathname ? 1 : -1))[0];
+    if (!newest) return null;
+    const b = await get(newest.pathname, { access: "private" });
+    if (!b || b.statusCode !== 200) return null;
+    return await new Response(b.stream).text();
+  }
+  async set(k: string, v: string) {
+    const { put, list, del } = await import("@vercel/blob");
+    const stamp = `${Date.now().toString().padStart(15, "0")}-${Math.random().toString(36).slice(2, 6)}`;
+    await put(`${this.dir(k)}${stamp}.txt`, v, { access: "private", addRandomSuffix: false, allowOverwrite: true, contentType: "text/plain" });
+    // keep the store small: drop versions older than the newest three
+    const old = (await list({ prefix: this.dir(k), limit: 1000 })).blobs.sort((a, b) => (a.pathname < b.pathname ? 1 : -1)).slice(3);
+    if (old.length) await del(old.map((o) => o.url)).catch(() => {});
+  }
+}
 let kv: KV | null = null;
 export function store(): KV {
   if (kv) return kv;
   const url = process.env.KV_REST_API_URL, token = process.env.KV_REST_API_TOKEN;
-  kv = url && token ? new Upstash(url, token) : process.env.ERANOS_LOCAL_STATE ? new FileKV(process.env.ERANOS_LOCAL_STATE) : new Mem();
+  kv = url && token ? new Upstash(url, token) : process.env.BLOB_READ_WRITE_TOKEN ? new BlobKV() : process.env.ERANOS_LOCAL_STATE ? new FileKV(process.env.ERANOS_LOCAL_STATE) : new Mem();
   return kv;
 }

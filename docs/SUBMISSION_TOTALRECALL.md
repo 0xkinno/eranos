@@ -19,7 +19,7 @@ Live form fields were not copied (the form needs a login). Kinnoski to paste the
 | Blog post URL | pending: Kinnoski publishes docs/BLOG.md on Medium or dev.to and pastes the link here |
 | Demo video | pending: record with `?tour=1&render=1` on the live site |
 | X or LinkedIn post | text in docs/X_POST.md, Kinnoski publishes |
-| Built with Tatum AI Builder | no |
+| Built with Tatum AI Builder (optional item 06) | Yes, as disclosed: the Part 15 prompt was run on ai.tatum.io (project "Sui Savings Circle App") and produced a shell. The shipped product was built with Claude Code, so we do not say "primarily". See docs/AI_BUILDER_PROMPT.md |
 | Deadline | 10 Nov 2026, 17:00 UTC (18:00 WAT) |
 
-Submission checklist: Walrus Memory writing on mainnet (yes), Tatum RPC for onchain data (yes), at least 10 memories on mainnet (yes, see FACTS), blog post (draft ready, not yet published), working demo and public repo (yes).
+Submission checklist: Walrus Memory writing on mainnet (yes), Tatum RPC for onchain data (yes), at least 10 memories on mainnet (yes, see FACTS), blog post (draft ready, not yet published), optional AI Builder item (entered with disclosure), working demo and public repo (yes).
