@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { tatum } from "@/lib/tatum/sui";
+import { store } from "@/lib/keeper/store";
 import { MEMWAL_RELAYER, MEMWAL_PKG, ERANOS_PKG } from "@/lib/config";
 
 export const dynamic = "force-dynamic";
@@ -16,5 +17,6 @@ export async function GET() {
     probe("sui-graphql", async () => (await t.checkpoint())?.sequenceNumber),
     probe("walrus-memory-relayer", async () => (await (await fetch(`${MEMWAL_RELAYER}/health`, { cache: "no-store" })).json()).status),
   ]);
-  return NextResponse.json({ app: "eranos", probes: [chain, relayer], provider: t.status(), config: { memwalPackage: MEMWAL_PKG, eranosPackage: ERANOS_PKG || null } });
+  const kv = await probe(`state-store (${store().kind})`, async () => { const v = String(Date.now()); await store().set("status:ping", v); return (await store().get("status:ping")) === v ? "write and read back ok" : Promise.reject(new Error("read back did not match")); });
+  return NextResponse.json({ app: "eranos", probes: [chain, relayer, kv], provider: t.status(), config: { memwalPackage: MEMWAL_PKG, eranosPackage: ERANOS_PKG || null } });
 }
