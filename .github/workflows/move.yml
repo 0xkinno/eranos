@@ -1,5 +1,6 @@
 name: move tests
 on:
+  workflow_dispatch:
   push:
     paths: ["move/**", ".github/workflows/move.yml"]
   pull_request:
