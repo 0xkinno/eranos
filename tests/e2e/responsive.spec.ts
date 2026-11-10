@@ -9,7 +9,7 @@ for (const [w, h] of VIEWPORTS) {
   for (const path of PAGES) {
     test(`${w}x${h} ${path.replace(CIRCLE, "[id]")}`, async ({ page }) => {
       const errors: string[] = [];
-      page.on("console", (m) => { if (m.type() === "error" && !/favicon|Failed to load resource.*(404|502)/.test(m.text())) errors.push(m.text()); });
+      page.on("console", (m) => { if (m.type() === "error" && !/favicon|Failed to load resource.*(404|502|503)/.test(m.text())) errors.push(m.text()); });
       page.on("pageerror", (e) => errors.push(e.message));
       await page.setViewportSize({ width: w, height: h });
       await page.goto(path, { waitUntil: "networkidle" });

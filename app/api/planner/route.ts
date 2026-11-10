@@ -10,6 +10,7 @@ let cache: { at: number; body: unknown } | null = null;
 export async function GET(req: Request) {
   const fresh = new URL(req.url).searchParams.get("fresh") === "1";
   if (!fresh && cache && Date.now() - cache.at < 180_000) return NextResponse.json(cache.body);
+  if (!process.env.KEEPER_MEMWAL_KEY) return NextResponse.json({ error: "memory reader is not configured on this deployment" }, { status: 503 });
   try {
     const c = await circleView(CIRCLE_ID);
     const mem = await readKnown(keeperMemory(MEMORY_ACCOUNT_ID, "known"));
