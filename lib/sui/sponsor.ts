@@ -1,6 +1,7 @@
 // Sponsored gas: the member signs as sender, the keeper signs as gas owner. A per-member per-round cap bounds the keeper's exposure.
 import type { Transaction } from "@mysten/sui/transactions";
 import type { Keypair } from "@mysten/sui/cryptography";
+import type { SuiGraphQLClient } from "@mysten/sui/graphql";
 
 export interface CapStore { get(key: string): Promise<number>; incr(key: string, by: number): Promise<number> }
 export class MemoryCapStore implements CapStore {
@@ -23,7 +24,7 @@ export async function refundGas(store: CapStore, p: { circle: string; cycle: num
 }
 
 /** Prepare a sponsored transaction: member is sender, keeper owns the gas. Returns bytes for the member to sign, and the keeper signature. */
-export async function sponsorTx(tx: Transaction, p: { member: string; keeper: Keypair; gasCoins: { objectId: string; version: string; digest: string }[]; budgetMist: number; client: Parameters<Transaction["build"]>[0] extends infer O ? O extends { client?: infer C } ? C : never : never }) {
+export async function sponsorTx(tx: Transaction, p: { member: string; keeper: Keypair; gasCoins: { objectId: string; version: string; digest: string }[]; budgetMist: number; client: SuiGraphQLClient }) {
   tx.setSender(p.member);
   tx.setGasOwner(p.keeper.toSuiAddress());
   tx.setGasPayment(p.gasCoins);

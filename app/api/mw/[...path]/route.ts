@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { MEMWAL_RELAYER } from "@/lib/config";
 
 export const runtime = "nodejs";
-const ALLOWED = [/^api\/remember(\/bulk|\/status(\/.*)?)?$/, /^api\/recall$/, /^api\/analyze$/, /^api\/ask$/, /^api\/restore$/, /^api\/memories(\/.*)?$/, /^api\/namespaces$/, /^api\/jobs(\/.*)?$/, /^(version|config|health)$/];
+const ALLOWED = [/^api\/remember(\/bulk(\/status)?|\/manual|\/[A-Za-z0-9_-]+)?$/, /^api\/recall$/, /^api\/analyze$/, /^api\/ask$/, /^api\/restore$/, /^api\/memories(\/.*)?$/, /^api\/namespaces$/, /^api\/jobs(\/.*)?$/, /^(version|config|health)$/];
 const FORWARD_HEADERS = ["content-type", "x-public-key", "x-signature", "x-timestamp", "x-nonce", "x-account-id", "x-delegate-key", "x-seal-session", "x-idempotency-key"];
 const hits = new Map<string, { n: number; t: number }>();
 const LIMIT = 120; // per IP per minute

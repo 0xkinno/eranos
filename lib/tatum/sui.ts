@@ -132,15 +132,15 @@ export class TatumSui {
   }
   /** Verification source of truth: status, sender, balance changes, checkpoint time, events. Never cached. */
   async getTransaction(digest: string) {
-    const r = await this.client.core.getTransaction({ digest, include: { balanceChanges: true, effects: true, events: true, transaction: true } });
+    const r = await this.client.core.getTransaction({ digest, include: { balanceChanges: true, effects: true, events: true, transaction: true, objectTypes: true } });
     const t = r.$kind === "Transaction" ? r.Transaction : r.FailedTransaction;
     return { ok: r.$kind === "Transaction" && t.status.success, tx: t };
   }
   async simulate(txBytes: Uint8Array) {
-    return this.client.core.simulateTransaction({ transaction: txBytes, include: { balanceChanges: true, effects: true, events: true } });
+    return this.client.core.simulateTransaction({ transaction: txBytes, include: { balanceChanges: true, effects: true, events: true, objectTypes: true } });
   }
   async execute(txBytes: Uint8Array, signatures: string[]) {
-    return this.client.core.executeTransaction({ transaction: txBytes, signatures, include: { balanceChanges: true, effects: true, events: true } });
+    return this.client.core.executeTransaction({ transaction: txBytes, signatures, include: { balanceChanges: true, effects: true, events: true, objectTypes: true } });
   }
   async checkpoint() {
     const res = await this.client.query({ query: "query Checkpoint { checkpoint { sequenceNumber timestamp } }" } as never) as { data?: { checkpoint?: { sequenceNumber: number; timestamp: string } } };
