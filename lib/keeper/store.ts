@@ -18,7 +18,7 @@ class Upstash implements KV {
 /** Vercel Blob (private store) as a key-value store. Every write is a new versioned object and a read takes the newest one from list(), which is strongly consistent. */
 class BlobKV implements KV {
   kind = "vercel-blob";
-  private dir = (k: string) => `eranos-kv/${encodeURIComponent(k)}/`;
+  private dir = (k: string) => `eranos-kv/${Buffer.from(k).toString("base64url")}/`;
   async get(k: string) {
     const { list, get } = await import("@vercel/blob");
     const r = await list({ prefix: this.dir(k), limit: 1000 });
