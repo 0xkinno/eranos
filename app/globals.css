@@ -54,7 +54,7 @@ em.serif, .serif { font-family: var(--serif); font-style: italic; font-weight: 4
 .account .ring { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--sui-deep); background: radial-gradient(circle at 35% 30%, #fff, var(--glow)); }
 .iconbtn { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; border: 0; background: var(--sky); color: var(--navy); cursor: pointer; }
 .menu-btn { display: none; }
-.sheet { position: fixed; inset: 0; z-index: 60; background: var(--paper); padding: 90px 24px 24px; display: flex; flex-direction: column; gap: 18px; }
+.sheet { position: fixed; inset: 0; z-index: 45; background: var(--paper); padding: 90px 24px 24px; display: flex; flex-direction: column; gap: 18px; }
 .sheet a { font: 800 1.9rem var(--display); color: var(--navy); text-decoration: none; }
 .popover { position: absolute; right: 0; top: 56px; min-width: 260px; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 8px; box-shadow: 0 24px 50px -20px rgba(11,42,91,.4); z-index: 80; }
 .popover button { width: 100%; text-align: left; display: flex; gap: 10px; align-items: center; min-height: 44px; padding: 8px 12px; border: 0; background: transparent; border-radius: 10px; font: 500 .9375rem var(--ui); cursor: pointer; }
