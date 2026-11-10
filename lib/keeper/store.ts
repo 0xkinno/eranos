@@ -41,6 +41,6 @@ let kv: KV | null = null;
 export function store(): KV {
   if (kv) return kv;
   const url = process.env.KV_REST_API_URL, token = process.env.KV_REST_API_TOKEN;
-  kv = url && token ? new Upstash(url, token) : process.env.BLOB_READ_WRITE_TOKEN ? new BlobKV() : process.env.ERANOS_LOCAL_STATE ? new FileKV(process.env.ERANOS_LOCAL_STATE) : new Mem();
+  kv = url && token ? new Upstash(url, token) : (process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID) && process.env.VERCEL ? new BlobKV() : process.env.ERANOS_LOCAL_STATE ? new FileKV(process.env.ERANOS_LOCAL_STATE) : new Mem();
   return kv;
 }
