@@ -1,31 +1,28 @@
-// Runs cycle 1 of the demo circle in real time: members pay their rounds, the keeper tick verifies, writes memory and pays out.
-// Member 2 pays late (90 seconds after the deadline) in rounds 1 and 2 so the learning loop has real late history.
+// Runs the current cycle of the demo circle in real time: members pay their rounds, the keeper tick verifies, writes memory and pays out.
 import { execSync } from "node:child_process";
 import { T } from "./chain";
 const CIRCLE = process.env.DEMO_CIRCLE_ID!, PKG = process.env.ERANOS_PKG!;
-const run = (c: string) => { try { return execSync(c, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"], timeout: 280_000 }); } catch (e) { return String((e as { stdout?: string }).stdout ?? e).slice(-300); } };
-const lateM2 = new Set([1, 2]);
-// Member 5 round 5 is left for the Playwright wallet test to pay through the UI. The driver pays it itself if still unpaid 4 minutes before the deadline.
-const heldForUi = (m: number, r: number, now: number, deadline: number) => m === 5 && r === 4 && now < deadline - 240_000;
+const ALL = [1, 2, 3, 4, 5].map((i) => process.env[`MEMBER_${i}_ADDRESS`]!);
+const run = (c: string) => { try { return execSync(c, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"], timeout: 280_000 }); } catch (e) { return "ERR " + String((e as { stdout?: string }).stdout ?? e).slice(-300); } };
 (async () => {
-  const circ = (await T.getCircle(CIRCLE)).json as { cycle_start_ms: string; round_ms: string; members: string[] };
-  const start = Number(circ.cycle_start_ms), rms = Number(circ.round_ms), n = circ.members.length;
-  const done = new Set<string>();
+  const circ = (await T.getCircle(CIRCLE)).json as { cycle: string; cycle_start_ms: string; round_ms: string; members: string[] };
+  const cycle = circ.cycle, start = Number(circ.cycle_start_ms), rms = Number(circ.round_ms), n = circ.members.length;
+  const idx = circ.members.map((a) => ALL.indexOf(a) + 1); // original member numbers (key slots)
+  console.log("driving cycle", cycle, "members", idx.join(","));
   for (;;) {
     const now = Date.now();
-    const ev = await T.queryEvents(`${PKG}::circle::Contributed`, 343633600);
-    for (const e of ev) done.add(`${e.json.round}:${circ.members.indexOf(e.json.member) + 1}`);
+    const done = new Set((await T.queryEvents(`${PKG}::circle::Contributed`, 343633600)).filter((e) => e.json.cycle === cycle).map((e) => `${e.json.round}:${ALL.indexOf(e.json.member) + 1}`));
     let acted = false;
     for (let r = 0; r < n; r++) {
-      const open = start + r * rms, deadline = open + rms;
-      for (let m = 1; m <= n; m++) {
-        if (done.has(`${r}:${m}`) || heldForUi(m, r, now, deadline)) continue;
-        const at = m === 2 && lateM2.has(r) ? deadline + 90_000 : open + 30_000 + m * 8_000;
-        if (now >= at) { console.log(new Date().toISOString(), "pay", m, r, run(`npx tsx scripts/cycle.ts pay ${m} ${r}`).trim().split("\n").pop()); done.add(`${r}:${m}`); acted = true; }
+      const open = start + r * rms;
+      for (const [k, m] of idx.entries()) {
+        if (done.has(`${r}:${m}`)) continue;
+        if (now >= open + 30_000 + k * 8_000) { let out = ""; for (let t = 0; t < 3 && !/pay true/.test(out); t++) out = run(`npx tsx scripts/cycle.ts pay ${m} ${r}`); console.log(new Date().toISOString(), "pay", m, r, out.trim().split("\n").pop()); acted = true; }
       }
     }
-    if (acted || now % 3 === 0) { console.log(new Date().toISOString(), "keeper tick"); console.log(run("npx tsx scripts/keeper.ts").split("\n").filter((l) => /verified|payouts|refused/.test(l)).join(" ").slice(0, 200)); }
-    if (done.size >= n * n && now > start + n * rms) { run("npx tsx scripts/keeper.ts"); console.log("cycle complete"); break; }
+    if (acted || Math.floor(now / 45_000) % 3 === 0) { console.log(new Date().toISOString(), "keeper tick"); console.log(run("npx tsx scripts/keeper.ts").split("\n").filter((l) => /verified|payouts|refused|ERR/.test(l)).join(" ").slice(0, 200)); }
+    const st = (await T.getCircle(CIRCLE)).json as { paid_out: boolean[] };
+    if (st.paid_out.length === n && st.paid_out.every(Boolean)) { run("npx tsx scripts/keeper.ts"); console.log("cycle complete"); break; }
     await new Promise((r) => setTimeout(r, 45_000));
   }
 })();

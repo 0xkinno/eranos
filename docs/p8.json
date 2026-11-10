@@ -1,0 +1,204 @@
+{
+  "generatedAt": "2026-11-10T08:40:27.072Z",
+  "cycle": {
+    "cycle": 1,
+    "currentRound": 4
+  },
+  "memoriesRead": 37,
+  "members": [
+    {
+      "member": 1,
+      "address": "0x06187d7da4ed038167fc334e26fa58bb1295d8a0fcdbf35a1b6221aa4c001a48",
+      "remindersOff": [
+        "08:27",
+        "08:37"
+      ],
+      "remindersOn": [
+        "08:39",
+        "08:43"
+      ],
+      "reminderReasonsOn": [
+        {
+          "reason": "payday on the 60% mark: first reminder when the money arrives",
+          "cited": [
+            "xn0thvdXjAYVCfNjUOLWm-yLa7608UP-Wf2v0B-CGgQ"
+          ]
+        },
+        {
+          "reason": "second reminder before the deadline",
+          "cited": [
+            "xn0thvdXjAYVCfNjUOLWm-yLa7608UP-Wf2v0B-CGgQ"
+          ]
+        }
+      ],
+      "orderOff": 1,
+      "orderOn": 2,
+      "orderReasonOn": "paid on time in every recorded round",
+      "orderCited": [
+        "JLosp1f4_v49Nfh7V1i7Bk-jL1uNDSpSpley3_UM708",
+        "hS3c2i9txkALlmng2drCuIMZeqMpzQKnh5t7yAF-gXw",
+        "NNBKzzm4EU4nnXQ5xWDWapHZpa_ygUwsFTbdtQYXjzE",
+        "dibhqfas6-LcCmvHOOb4EHZnZQ6489FpC_YmkcTu3iE",
+        "XsJHIlgxQhVZ0ONQOlECw5fXS952uiN-qYpbUmyechI"
+      ],
+      "memoryUsed": true
+    },
+    {
+      "member": 2,
+      "address": "0xc0be20503dbbb2eaad65a0f8b10412caf5365afc369a8f5de878fe3440538f8a",
+      "remindersOff": [
+        "08:27",
+        "08:37"
+      ],
+      "remindersOn": [
+        "08:43",
+        "08:44"
+      ],
+      "reminderReasonsOn": [
+        {
+          "reason": "payday on the 80% mark: first reminder when the money arrives",
+          "cited": [
+            "vN6-akeD3NmWtvExHGo0QjOWBh6FW4qtEFc9ItFcKiw"
+          ]
+        },
+        {
+          "reason": "paid 0.01 h late on average: second reminder follows quickly",
+          "cited": [
+            "vN6-akeD3NmWtvExHGo0QjOWBh6FW4qtEFc9ItFcKiw",
+            "ZKiXEGj-er-VDKY3gR9bqf7I7H7CHJOLqfOBZjXWa5U",
+            "ovRgSmoqnhzLelt9hmAi00jqjTIjn8nFTqM80A8_5dA",
+            "4eCpvRF06blboLuvuSQJsQUCNHtr9bxniV3flDDFtWI"
+          ]
+        }
+      ],
+      "orderOff": 2,
+      "orderOn": 4,
+      "orderReasonOn": "paid 0.01 h late on average, so draws later",
+      "orderCited": [
+        "ZKiXEGj-er-VDKY3gR9bqf7I7H7CHJOLqfOBZjXWa5U",
+        "ovRgSmoqnhzLelt9hmAi00jqjTIjn8nFTqM80A8_5dA",
+        "4eCpvRF06blboLuvuSQJsQUCNHtr9bxniV3flDDFtWI"
+      ],
+      "memoryUsed": true
+    },
+    {
+      "member": 3,
+      "address": "0x0c8402291e785870be69763de1624290bbb0549975336203b84ed8c9e79bfabf",
+      "remindersOff": [
+        "08:27",
+        "08:37"
+      ],
+      "remindersOn": [
+        "08:33",
+        "08:37"
+      ],
+      "reminderReasonsOn": [
+        {
+          "reason": "payday on the 30% mark: first reminder when the money arrives",
+          "cited": [
+            "HQ8WH9g9tzRf52J8whFnJow13v5_MBJJ6N3b4qxK67g"
+          ]
+        },
+        {
+          "reason": "second reminder before the deadline",
+          "cited": [
+            "HQ8WH9g9tzRf52J8whFnJow13v5_MBJJ6N3b4qxK67g"
+          ]
+        }
+      ],
+      "orderOff": 3,
+      "orderOn": 3,
+      "orderReasonOn": "paid on time in every recorded round",
+      "orderCited": [
+        "k218xQyaFLeWEsV17Mpwv6ZL0X8kea38thynoYWyxDo",
+        "oJVGZeelpTdxJ3sxZ509RMCOenhXVVS3Dagi7vJeZq8",
+        "lSGN57j9KkjvgDhvIUlqxFqQ9P4Dl3P5xy4cNEQ-K1U",
+        "JbWThqZguG1Vefhv1p-l_9FKQOVlMD4mphZ-mUATpsA",
+        "ABRN16tJx14e46CoL4Suc3g_eB9NGJjL9OqxMplETC4"
+      ],
+      "memoryUsed": true
+    },
+    {
+      "member": 4,
+      "address": "0xb056bc8d3261eff5e2a2baa2ba50ae6b4e26a77517be76585ea78feeeebbee73",
+      "remindersOff": [
+        "08:27",
+        "08:37"
+      ],
+      "remindersOn": [
+        "08:37",
+        "08:41"
+      ],
+      "reminderReasonsOn": [
+        {
+          "reason": "payday on the 50% mark: first reminder when the money arrives",
+          "cited": [
+            "I0_Teuint-1amNIetH3_IRU5MT4hZXSbTMosJhHEicc"
+          ]
+        },
+        {
+          "reason": "second reminder before the deadline",
+          "cited": [
+            "I0_Teuint-1amNIetH3_IRU5MT4hZXSbTMosJhHEicc"
+          ]
+        }
+      ],
+      "orderOff": 4,
+      "orderOn": 1,
+      "orderReasonOn": "confirmed need for round 1: \"Member 4 needs the pot early, in round 1, because the school fee is due.\"",
+      "orderCited": [
+        "vj2O6cviZ_Q9e5YHYWGfgSjJWReovSmFe_MStyPMjA0"
+      ],
+      "memoryUsed": true
+    },
+    {
+      "member": 5,
+      "address": "0x0e2d509a9bb73c1a69c25320a0d7ae99ff5781da5d57d3009aa86949c35a0656",
+      "remindersOff": [
+        "08:27",
+        "08:37"
+      ],
+      "remindersOn": [
+        "08:45",
+        "08:45"
+      ],
+      "reminderReasonsOn": [
+        {
+          "reason": "payday on the 90% mark: first reminder when the money arrives",
+          "cited": [
+            "vmTG66SmyqP7sUeG5093rSR4UMtCWkMz79zbefwdxus"
+          ]
+        },
+        {
+          "reason": "paid 0.05 h late on average: second reminder follows quickly",
+          "cited": [
+            "vmTG66SmyqP7sUeG5093rSR4UMtCWkMz79zbefwdxus",
+            "ZLMZ5PkAicpAffkFugvIygNqEB6Xu8nccQOOVKZGVPU"
+          ]
+        }
+      ],
+      "orderOff": 5,
+      "orderOn": 5,
+      "orderReasonOn": "paid 0.05 h late on average, so draws later",
+      "orderCited": [
+        "ZLMZ5PkAicpAffkFugvIygNqEB6Xu8nccQOOVKZGVPU"
+      ],
+      "memoryUsed": true
+    }
+  ],
+  "changedReminderCount": 5,
+  "changedOrderCount": 3,
+  "syntheticReplay": {
+    "label": "SYNTHETIC: 12 invented member-months, not real data, kept out of headline numbers",
+    "memoryOff": {
+      "reminders": 24,
+      "falseEarly": 12,
+      "wasted": 10
+    },
+    "memoryOn": {
+      "reminders": 24,
+      "falseEarly": 0,
+      "wasted": 10
+    }
+  }
+}

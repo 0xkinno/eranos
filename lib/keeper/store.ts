@@ -1,7 +1,8 @@
 // Disposable state. Walrus and Sui are the source of truth. Upstash Redis REST when configured, otherwise a local JSON file (scripts) or memory (serverless).
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 export interface KV { get(k: string): Promise<string | null>; set(k: string, v: string): Promise<void>; kind: string }
-class Mem implements KV { kind = "memory"; m = new Map<string, string>(); async get(k: string) { return this.m.get(k) ?? null; } async set(k: string, v: string) { this.m.set(k, v); } }
+const g = globalThis as unknown as { __eranosMem?: Map<string, string> };
+class Mem implements KV { kind = "memory"; m = (g.__eranosMem ??= new Map<string, string>()); async get(k: string) { return this.m.get(k) ?? null; } async set(k: string, v: string) { this.m.set(k, v); } }
 class FileKV implements KV {
   kind = "file"; constructor(private path: string) {}
   private load(): Record<string, string> { return existsSync(this.path) ? JSON.parse(readFileSync(this.path, "utf8")) : {}; }
