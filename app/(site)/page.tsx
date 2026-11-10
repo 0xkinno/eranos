@@ -46,7 +46,7 @@ export default async function Home() {
           <blockquote style={{ margin: 0, padding: "6px 0 6px 20px", borderLeft: "3px solid var(--ember)", fontFamily: "var(--display)", fontSize: "1.5rem", color: "var(--amethyst)" }}>"Lucía's July is gone, and so is the record of who was owed what."</blockquote>
           <p>Lucía is a fictional composite. The pattern is not: circles are run on one person's trust, one person's phone and one person's notebook.</p>
         </div>
-        <div className="scroll-x" style={{ marginTop: 28 }}>
+        <div className="scroll-x" tabIndex={0} role="region" aria-label="Scrollable table" style={{ marginTop: 28 }}>
           <table className="t"><tbody><tr><th>Ajo</th><th>Susu</th><th>Tanda</th><th>Chit</th><th>Pardner</th><th>Hui</th><th>Equb</th></tr><tr><td>Lagos</td><td>Accra</td><td>Houston, Mexico City</td><td>Chennai</td><td>London</td><td>Taipei</td><td>Addis Ababa</td></tr></tbody></table>
         </div>
         <p className="muted" style={{ marginTop: 14 }}>In ancient Athens it was an <em>eranos</em>: friends putting money in so one of them could draw it. The README lists the sources.</p>

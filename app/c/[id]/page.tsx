@@ -71,7 +71,7 @@ export default function CirclePage({ params }: { params: Promise<{ id: string }>
         </Glow>
       </div>
       <h2 style={{ marginTop: 48, fontSize: "1.75rem" }}>Timeline</h2>
-      <div className="scroll-x"><table className="t" style={{ marginTop: 12 }}><thead><tr><th>Round</th><th>Draws</th><th>Paid</th><th>Pot</th></tr></thead><tbody>
+      <div className="scroll-x" tabIndex={0} role="region" aria-label="Scrollable table"><table className="t" style={{ marginTop: 12 }}><thead><tr><th>Round</th><th>Draws</th><th>Paid</th><th>Pot</th></tr></thead><tbody>
         {c.order.map((m, r) => { const po = c.payouts.find((p) => p.round === r); const n = (c.paid[String(r)] ?? []).length; return (
           <tr key={r} data-testid={`round-${r}`}><td>{r + 1}</td><td>Member {c.members.indexOf(m) + 1} <span className="mono muted">{short(m)}</span></td><td>{n} of {c.members.length}</td>
             <td>{po ? <a href={`https://suiscan.xyz/mainnet/tx/${po.digest}`}>paid out · {po.digest.slice(0, 8)}…</a> : r > round ? "not open" : n === c.members.length ? "ready to pay out" : `waiting: ${c.members.length - n} to pay`}</td></tr>); })}

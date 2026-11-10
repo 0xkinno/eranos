@@ -23,7 +23,7 @@ export default async function Proof() {
         <Glow><p className="eyebrow">Memories on Walrus mainnet</p><div className="big" style={{ marginTop: 8 }}>{s?.memories ?? 0}</div><p className="mono muted" style={{ marginTop: 6 }}>{Object.entries(facts.memories?.byNamespace ?? {}).map(([k, v]) => `${k} ${v}`).join(" · ") || "counted by scripts/facts.ts"}</p></Glow>
       </div>
       <h2 style={{ marginTop: 48, fontSize: "1.75rem" }}>Transactions and blobs</h2>
-      <div className="scroll-x"><table className="t" style={{ marginTop: 12 }} data-testid="evidence-table"><thead><tr><th>When (UTC)</th><th>What it proves</th><th>Digest or blob</th></tr></thead><tbody>
+      <div className="scroll-x" tabIndex={0} role="region" aria-label="Scrollable table"><table className="t" style={{ marginTop: 12 }} data-testid="evidence-table"><thead><tr><th>When (UTC)</th><th>What it proves</th><th>Digest or blob</th></tr></thead><tbody>
         {ev.map((e, i) => (
           <tr key={i}><td className="mono">{e.at.slice(5, 16).replace("T", " ")}</td><td>{e.label}{typeof e.error === "string" && e.error ? <div className="mono muted">{e.error.slice(0, 150)}</div> : null}</td>
             <td className="mono">{isDigest(e.digest) ? <a href={scan(e.digest)}>{e.digest.slice(0, 10)}…</a> : e.digest ? `blob ${String(e.digest).slice(0, 12)}…` : "refused before execution"}</td></tr>))}
