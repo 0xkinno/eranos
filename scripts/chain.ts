@@ -15,7 +15,7 @@ export const PUBKEYS = process.env.STEWARD_PUBKEYS!.split(",");
 export const STEWARDS = stewardAddress(PUBKEYS);
 if (STEWARDS !== process.env.STEWARD_MULTISIG_ADDRESS) throw new Error("multisig address mismatch");
 
-export function evidence(label: string, digest: string, extra: Record<string, unknown> = {}) {
+export function evidence(label: string, digest: string | null, extra: Record<string, unknown> = {}) {
   appendFileSync("docs/evidence.jsonl", JSON.stringify({ at: new Date().toISOString(), label, digest, ...extra }) + "\n");
 }
 export function setEnv(key: string, value: string) {
