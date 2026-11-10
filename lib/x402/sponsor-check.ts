@@ -21,6 +21,8 @@ export function checkSponsorable(bytes: Uint8Array, p: SponsorPolicy): SponsorCh
       if (args.some((a) => a.$kind === "GasCoin")) return { ok: false, why: "gas coin used as a payment coin" };
     } else if (c.$kind === "MoveCall") {
       const m = c.MoveCall;
+      // coinWithBalance redeems the sender's own address balance and returns the change. Nothing here touches the gas coin.
+      if (normalizeSuiAddress(m.package) === normalizeSuiAddress("0x2") && m.module === "coin" && (m.function === "redeem_funds" || m.function === "send_funds")) continue;
       if (normalizeSuiAddress(m.package) !== normalizeSuiAddress(pkg) || m.module !== mod || m.function !== fn) return { ok: false, why: `only ${p.target} may be called` };
       calls++;
     } else return { ok: false, why: `command ${c.$kind} is not allowed` };

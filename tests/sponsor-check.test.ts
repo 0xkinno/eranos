@@ -20,6 +20,12 @@ const contribute = (tx: Transaction, fn = "contribute_for") => {
 
 describe("sponsor check", () => {
   it("accepts a plain contribution", async () => { expect(checkSponsorable(await build(contribute), policy)).toEqual({ ok: true, sender: MEMBER }); });
+  it("allows the sender's own coin redeem and change return, nothing else from 0x2", async () => {
+    const ok = await build((tx) => { tx.moveCall({ target: "0x2::coin::redeem_funds", typeArguments: ["0x2::sui::SUI"], arguments: [tx.pure.u64(1)] }); contribute(tx); });
+    expect(checkSponsorable(ok, policy)).toMatchObject({ ok: true });
+    const bad = await build((tx) => { tx.moveCall({ target: "0x2::coin::burn", typeArguments: ["0x2::sui::SUI"], arguments: [tx.pure.u64(1)] }); contribute(tx); });
+    expect(checkSponsorable(bad, policy)).toMatchObject({ ok: false });
+  });
   it("refuses a different function", async () => { expect(checkSponsorable(await build((t) => contribute(t, "payout")), policy)).toMatchObject({ ok: false }); });
   it("refuses when the keeper is not the gas owner or is the sender", async () => {
     expect(checkSponsorable(await build(contribute, { owner: MEMBER }), policy)).toMatchObject({ ok: false, why: /gas owner/ });
