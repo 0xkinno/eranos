@@ -16,7 +16,7 @@ const NAMES: [string, string][] = [["ajo", "Lagos"], ["susu", "Accra"], ["tanda"
 export function Landing({ d }: { d: LandingData }) {
   const reduce = useReducedMotion();
   const n = d.members.length || 5;
-  const word = (t: string, i: number) => <motion.span key={i} style={{ display: "inline-block", marginRight: "0.22em" }} initial={reduce ? false : { y: 36, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.7, delay: 0.1 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}>{t}</motion.span>;
+  const word = (t: string, i: number) => <span key={i}><motion.span style={{ display: "inline-block" }} initial={reduce ? false : { y: 36, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.7, delay: 0.1 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}>{t}</motion.span>{" "}</span>;
   return (
     <>
       <section className="hero">
