@@ -4,10 +4,12 @@ import { keeperMemory } from "@/lib/memory/client";
 import { heardLine, heardText } from "@/lib/memory/heard";
 import { MEMORY_ACCOUNT_ID, CIRCLE_ID } from "@/lib/facts/stats";
 import { tatum } from "@/lib/tatum/sui";
+import { limited, clientIp } from "@/lib/rate";
 export const dynamic = "force-dynamic";
 export const maxDuration = 120;
 
 export async function POST(req: NextRequest) {
+  if (limited(`scribe:${clientIp(req)}`, 4)) return NextResponse.json({ error: "too many requests, try again in a minute" }, { status: 429 });
   const { text, about } = (await req.json()) as { text?: string; about?: string };
   if (!text || text.length > 1500 || !about) return NextResponse.json({ error: "text (max 1500 characters) and about (member address) are required" }, { status: 400 });
   const circle = (await tatum().getCircle(CIRCLE_ID)).json as { members: string[] };

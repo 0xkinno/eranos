@@ -51,7 +51,7 @@ Every other savings app we looked at keeps the user's memory in an account the a
 
 ## Where the money goes
 
-Reality rung: **Sui mainnet, capped funds.** The demo circle has 5 members, pays 0.1 USDC per member per round, and runs 20-minute rounds so a judge can watch a full cycle. A real circle runs monthly.
+Reality rung: **Sui mainnet, capped funds.** The demo circle has 4 members, pays 0.1 USDC per member per round, and runs 20-minute rounds so a judge can watch a full cycle. A real circle runs monthly.
 
 | Step | Transaction |
 |---|---|
@@ -61,10 +61,10 @@ Reality rung: **Sui mainnet, capped funds.** The demo circle has 5 members, pays
 | Member 1 joins: memory key and money roll in one transaction | [42Dsi8wX…](https://suiscan.xyz/mainnet/tx/42Dsi8wXBjxUNsQbN4q64BA7Sh7KMXUcZU3zhSeFuoyR) |
 | Member 2 joins | [5H8bHaM4…](https://suiscan.xyz/mainnet/tx/5H8bHaM43JmVZu7sWq9ztSfCsbVpwM3QDL4mKfFpBznZ) |
 | Cycle 1 starts | [2zwqECsH…](https://suiscan.xyz/mainnet/tx/2zwqECsHgoMsgPyJXGECwgZFdDEXv5crNJDvr2fVQbyP) |
-| Contributions with sponsored gas (7) | see [/proof](https://eranos.vercel.app/proof) |
+| Contributions with sponsored gas (27) | see [/proof](https://eranos.vercel.app/proof) |
 | Agent payments over x402 (2) | [3RLmStgo…](https://suiscan.xyz/mainnet/tx/3RLmStgoG5DbWADSEgNkovDYUoaQykZtTmJpzQ7tEwMW), [6F1rX2Mo…](https://suiscan.xyz/mainnet/tx/6F1rX2MoqosN4rZYnAiw1hNfMXrjUeeLZVd565bGjpjb) |
 | First payout | [CCRGJCgm…](https://suiscan.xyz/mainnet/tx/CCRGJCgmpCAk6RjLiLhNsKaegVTSFU982uitVHSjri93) |
-| Leave: key removed with the member | not yet recorded |
+| Leave: key removed with the member | [3V5wtvwe…](https://suiscan.xyz/mainnet/tx/3V5wtvweBZR4rDVjUZgVBwQ3XEMQUiC19BPHZXvDzb2t) |
 | Admit without a memory key | refused at Tatum's pre-execution check, abort code 12 `EMemoryNotGranted` |
 
 ## The problem
@@ -162,11 +162,11 @@ sequenceDiagram
 - **Heard to known** needs the subject's wallet signature (`lib/memory/policy.ts`). Tested: a wrong signer, a signature over other text, and an unsigned fact are all refused.
 - **Learning loop:** member-stated paydays set reminder times, and verified late payments move the second reminder earlier and push a late payer later in the next cycle's order. Switch memory off on the landing page to see the default.
 - **Leave:** removing a key rotates the account's access counter. Revocation is forward only. It does not take back what a member already read.
-- **Memories on mainnet now:** 20 (17 in `known`).
+- **Memories on mainnet now:** 44 (41 in `known`).
 
 ## How Tatum is used
 
-Every Sui read and write goes through the Tatum GraphQL gateway (`lib/tatum/sui.ts`): object reads, `Contributed` and `PaidOut` events, transaction verification by digest, simulation before execution, and execution. The client throttles to about 3 requests a second, counts calls by method, and on a 402 or plan-limit answer switches visibly to the public node and retries Tatum every 10 minutes. Tatum calls counted in the last facts run: 3 event queries by that process alone; `/api/status` reports live counts. `lib/tatum/data.ts` reads USDC rates in six currencies for display and screens prospective members' addresses.
+Every Sui read and write goes through the Tatum GraphQL gateway (`lib/tatum/sui.ts`): object reads, `Contributed` and `PaidOut` events, transaction verification by digest, simulation before execution, and execution. The client throttles to about 3 requests a second, counts calls by method, and on a 402 or plan-limit answer switches visibly to the public node and retries Tatum every 10 minutes. Tatum calls counted in the last facts run: 2 event queries by that process alone; `/api/status` reports live counts. `lib/tatum/data.ts` reads USDC rates in six currencies for display and screens prospective members' addresses.
 
 ## Agent payments
 
@@ -190,8 +190,31 @@ Fault switch: `ERANOS_SABOTAGE=keeper-claims-unpaid npx tsx scripts/keeper.ts` m
 
 ## Measured
 
-From `docs/FACTS.json`: 9 contributions and 1 payouts verified on chain, 5 join transactions, 2 x402 payments, 20 memories. Tests: 62 Vitest and 24 Move. Average gas per sampled transaction: 1491561 MIST.
-Misses and error directions are in [docs/PROOF.md](docs/PROOF.md).
+Everything here comes from [docs/FACTS.json](docs/FACTS.json) (live reads) and [docs/PROOF.md](docs/PROOF.md).
+
+| What | Number |
+|---|---|
+| Contributions verified on chain through Tatum | 29 |
+| Payouts, each to the scheduled member | 6 |
+| Join transactions (money and memory together) | 5 |
+| Agent payments over x402 (script agent) | 2 |
+| Memories on Walrus mainnet | 44 |
+| Vitest tests, Move tests | 62, 24 |
+| Average gas of a sampled transaction | 815232 MIST |
+
+**Memory off versus on** on the real circle: reminder times changed for 5 of 5 members, and the next cycle's order changed for 3 of 5. On a labelled synthetic replay of 12 invented member-months, memory removed false-early reminders (12 to 0) and did not reduce wasted ones (10 to 10). We report both. Reminder delivery to phones is not built: Eranos computes and shows the schedule.
+
+![Memory off and on](docs/images/memory-switch.png)
+
+**What we could not measure:** the 30-write recall-lag study and points per round were not run, and a Seal key request after leaving was not run separately.
+
+## Design
+
+Sui light blue, editorial type, no crypto-dashboard look. Bricolage Grotesque, Instrument Serif, Hanken Grotesk and JetBrains Mono, all self-hosted. Cards glow under the cursor, the ring in the hero is hand-drawn SVG that animates with Framer Motion, and every motion stops under reduced-motion. Measured with Playwright on the deployed site: fonts, SVG positions, overflow, contrast and 7 viewports. See [docs/UI_INSPECTION.md](docs/UI_INSPECTION.md) and [DESIGN.md](DESIGN.md).
+
+![Membership diagram](docs/images/membership.png)
+
+<p align="center"><img src="docs/images/mobile.png" width="260" alt="Mobile landing page"></p>
 
 ## What is live, substituted, designed
 
@@ -204,6 +227,9 @@ Misses and error directions are in [docs/PROOF.md](docs/PROOF.md).
 | Address screening | endpoint accepts Sui addresses, source coverage for Sui unproven |
 | zkLogin wallets as stewards or memory key holders | designed out, not supported |
 | Replay set of synthetic member-months | labelled synthetic, kept out of headline numbers |
+| Reminder delivery to a phone | not built. The schedule is computed and shown, nothing is sent |
+| Steward proposals on the deployed site | held in memory until a Redis store is connected. Cycle 2 was proposed and signed through the same API on a local server |
+| Unattended scheduled tick | route and workflow written, not yet recorded as a run |
 | Demo members | the builder's own script wallets |
 
 ## Recovery
@@ -242,3 +268,5 @@ Built with AI coding assistants. Lucía is a fictional composite. The demo circl
 ## Docs
 
 [TASK.md](TASK.md), [PROGRESS.md](PROGRESS.md), [docs/MILESTONE.md](docs/MILESTONE.md), [docs/EVIDENCE.md](docs/EVIDENCE.md), [docs/PROOF.md](docs/PROOF.md), [docs/FINDINGS.md](docs/FINDINGS.md), [docs/SDK_SURFACE.md](docs/SDK_SURFACE.md), [docs/PLATFORM_PROBE.md](docs/PLATFORM_PROBE.md), [DESIGN.md](DESIGN.md). Licence MIT.
+
+The optional Tatum AI Builder prompt is kept in [docs/AI_BUILDER_PROMPT.md](docs/AI_BUILDER_PROMPT.md). Eranos was not built primarily with ai.tatum.io and does not claim that award.

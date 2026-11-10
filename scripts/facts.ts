@@ -31,6 +31,7 @@ import { usdcRate } from "@/lib/tatum/data";
     memories: { total, byNamespace: byNs },
     chain: { contributions: contribs.length, payouts: payouts.length, joinTransactions: sum(/^join member/), x402Payments: sum(/^x402 agent payment/), sponsoredContributions: sum(/pays round/) },
     tests: { vitest, move: moveTests },
+    p8: (() => { try { const j = JSON.parse(readFileSync("docs/p8.json", "utf8")); return { changedReminderCount: j.changedReminderCount, changedOrderCount: j.changedOrderCount, falseEarlyOff: j.syntheticReplay.memoryOff.falseEarly, falseEarlyOn: j.syntheticReplay.memoryOn.falseEarly, wastedOff: j.syntheticReplay.memoryOff.wasted, wastedOn: j.syntheticReplay.memoryOn.wasted }; } catch { return null; } })(),
     tatumCalls: t.status().tatumCalls,
     gas: { sampleCount: gas.length, avgMist: gas.length ? Math.round(gas.reduce((a, b) => a + b, 0) / gas.length) : null },
     usdcUsd: sui?.value ?? null,

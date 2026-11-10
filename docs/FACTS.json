@@ -1,37 +1,45 @@
 {
-  "generatedAt": "2026-11-10T07:45:57.194Z",
+  "generatedAt": "2026-11-10T08:47:32.726Z",
   "package": "0xf56a7c35676c7486b2078822f5b3ae58e383ac47b9c189fe77c3df3ea03fe42e",
   "circle": {
     "id": "0xd50b0e10438c1fe18bc1f9896788080fc7662de94954da7ddfa1209ae13c4475",
-    "members": 5,
+    "members": 4,
     "contributionUsdc": 0.1
   },
   "memories": {
-    "total": 20,
+    "total": 44,
     "byNamespace": {
-      "known": 17,
-      "heard": 2,
-      "scribe": 1
+      "known": 41,
+      "scribe": 1,
+      "heard": 2
     }
   },
   "chain": {
-    "contributions": 9,
-    "payouts": 1,
+    "contributions": 29,
+    "payouts": 6,
     "joinTransactions": 5,
     "x402Payments": 2,
-    "sponsoredContributions": 7
+    "sponsoredContributions": 27
   },
   "tests": {
     "vitest": 62,
     "move": 24
   },
+  "p8": {
+    "changedReminderCount": 5,
+    "changedOrderCount": 3,
+    "falseEarlyOff": 12,
+    "falseEarlyOn": 0,
+    "wastedOff": 10,
+    "wastedOn": 10
+  },
   "tatumCalls": {
-    "Events": 3,
+    "Events": 2,
     "multiGetObjects": 1
   },
   "gas": {
-    "sampleCount": 12,
-    "avgMist": 1491561
+    "sampleCount": 32,
+    "avgMist": 815232
   },
-  "usdcUsd": 0.99904769
+  "usdcUsd": 0.99892568
 }

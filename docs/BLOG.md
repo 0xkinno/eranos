@@ -10,7 +10,7 @@ Rotating savings circles are called ajo in Lagos, susu in Accra, tanda in Housto
 
 Each member pays their round from their own wallet. A Sui contract pays the pot only to the member whose turn it is, and only when everyone has paid. The circle's memory belongs to the circle: a Walrus Memory account owned by three stewards (any two sign), with one delegate key per member.
 
-Right now the demo circle has 5 members paying 0.1 USDC per round, on 20-minute rounds so you can watch a full cycle. On mainnet so far: 9 verified contributions, 1 payouts, 2 payments made by an agent over x402, and 20 memories on Walrus.
+Right now the demo circle has 4 members paying 0.1 USDC per round, on 20-minute rounds so you can watch a full cycle. On mainnet so far: 29 verified contributions, 6 payouts, 2 payments made by an agent over x402, and 44 memories on Walrus.
 
 ## How it uses Walrus Memory
 
@@ -36,7 +36,7 @@ Member 2 paid late in rounds 2 and 3 of the first cycle. The keeper recorded the
 
 - The Walrus Memory package and registry IDs in older notes are not the ones the live relayer uses. We read `/config` before creating an account.
 - Tatum's address notifications do not support Sui, so a scheduled tick replaces them.
-- A Walrus write takes about 20 seconds to confirm. The recall of that write by a different delegate was visible about 2.6 seconds later.
+- A Walrus write takes about 20 seconds to confirm. A different delegate could recall that write about 2.6 seconds later in each of our two measurements (we did not run the 30-write study).
 - Removing a key is forward only. It does not take back what a member already read, and we say so.
 
 Code: https://github.com/0xkinno/eranos · Proof: https://eranos.vercel.app/proof

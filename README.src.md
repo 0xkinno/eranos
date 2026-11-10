@@ -190,8 +190,31 @@ Fault switch: `ERANOS_SABOTAGE=keeper-claims-unpaid npx tsx scripts/keeper.ts` m
 
 ## Measured
 
-From `docs/FACTS.json`: {{facts.chain.contributions}} contributions and {{facts.chain.payouts}} payouts verified on chain, {{facts.chain.joinTransactions}} join transactions, {{facts.chain.x402Payments}} x402 payments, {{facts.memories.total}} memories. Tests: {{facts.tests.vitest}} Vitest and {{facts.tests.move}} Move. Average gas per sampled transaction: {{facts.gas.avgMist}} MIST.
-Misses and error directions are in [docs/PROOF.md](docs/PROOF.md).
+Everything here comes from [docs/FACTS.json](docs/FACTS.json) (live reads) and [docs/PROOF.md](docs/PROOF.md).
+
+| What | Number |
+|---|---|
+| Contributions verified on chain through Tatum | {{facts.chain.contributions}} |
+| Payouts, each to the scheduled member | {{facts.chain.payouts}} |
+| Join transactions (money and memory together) | {{facts.chain.joinTransactions}} |
+| Agent payments over x402 (script agent) | {{facts.chain.x402Payments}} |
+| Memories on Walrus mainnet | {{facts.memories.total}} |
+| Vitest tests, Move tests | {{facts.tests.vitest}}, {{facts.tests.move}} |
+| Average gas of a sampled transaction | {{facts.gas.avgMist}} MIST |
+
+**Memory off versus on** on the real circle: reminder times changed for {{facts.p8.changedReminderCount}} of 5 members, and the next cycle's order changed for {{facts.p8.changedOrderCount}} of 5. On a labelled synthetic replay of 12 invented member-months, memory removed false-early reminders ({{facts.p8.falseEarlyOff}} to {{facts.p8.falseEarlyOn}}) and did not reduce wasted ones ({{facts.p8.wastedOff}} to {{facts.p8.wastedOn}}). We report both. Reminder delivery to phones is not built: Eranos computes and shows the schedule.
+
+![Memory off and on](docs/images/memory-switch.png)
+
+**What we could not measure:** the 30-write recall-lag study and points per round were not run, and a Seal key request after leaving was not run separately.
+
+## Design
+
+Sui light blue, editorial type, no crypto-dashboard look. Bricolage Grotesque, Instrument Serif, Hanken Grotesk and JetBrains Mono, all self-hosted. Cards glow under the cursor, the ring in the hero is hand-drawn SVG that animates with Framer Motion, and every motion stops under reduced-motion. Measured with Playwright on the deployed site: fonts, SVG positions, overflow, contrast and 7 viewports. See [docs/UI_INSPECTION.md](docs/UI_INSPECTION.md) and [DESIGN.md](DESIGN.md).
+
+![Membership diagram](docs/images/membership.png)
+
+<p align="center"><img src="docs/images/mobile.png" width="260" alt="Mobile landing page"></p>
 
 ## What is live, substituted, designed
 
@@ -204,6 +227,9 @@ Misses and error directions are in [docs/PROOF.md](docs/PROOF.md).
 | Address screening | endpoint accepts Sui addresses, source coverage for Sui unproven |
 | zkLogin wallets as stewards or memory key holders | designed out, not supported |
 | Replay set of synthetic member-months | labelled synthetic, kept out of headline numbers |
+| Reminder delivery to a phone | not built. The schedule is computed and shown, nothing is sent |
+| Steward proposals on the deployed site | held in memory until a Redis store is connected. Cycle 2 was proposed and signed through the same API on a local server |
+| Unattended scheduled tick | route and workflow written, not yet recorded as a run |
 | Demo members | the builder's own script wallets |
 
 ## Recovery
@@ -242,3 +268,5 @@ Built with AI coding assistants. Lucía is a fictional composite. The demo circl
 ## Docs
 
 [TASK.md](TASK.md), [PROGRESS.md](PROGRESS.md), [docs/MILESTONE.md](docs/MILESTONE.md), [docs/EVIDENCE.md](docs/EVIDENCE.md), [docs/PROOF.md](docs/PROOF.md), [docs/FINDINGS.md](docs/FINDINGS.md), [docs/SDK_SURFACE.md](docs/SDK_SURFACE.md), [docs/PLATFORM_PROBE.md](docs/PLATFORM_PROBE.md), [DESIGN.md](DESIGN.md). Licence MIT.
+
+The optional Tatum AI Builder prompt is kept in [docs/AI_BUILDER_PROMPT.md](docs/AI_BUILDER_PROMPT.md). Eranos was not built primarily with ai.tatum.io and does not claim that award.
