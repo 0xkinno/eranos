@@ -47,6 +47,7 @@ describe("relayer rate limit", () => {
     const r = await withRateLimitRetry(async () => { if (n++ < 2) throw limit; return "ok"; }, { sleep: async (ms) => { waits.push(ms); } });
     expect(r).toBe("ok"); expect(waits.length).toBe(2);
   });
+  it("stops waiting once the time budget is spent", async () => { const e = new Error("429 retry_after_seconds\":30"); await expect(withRateLimitRetry(async () => { throw e; }, { deadline: Date.now() + 1000, sleep: async () => { throw new Error("slept"); } })).rejects.toBe(e); });
   it("rethrows other errors at once and a limit that never lifts", async () => {
     await expect(withRateLimitRetry(async () => { throw new Error("boom"); }, { sleep: async () => {} })).rejects.toThrow("boom");
     await expect(withRateLimitRetry(async () => { throw limit; }, { sleep: async () => {} })).rejects.toThrow("429");
