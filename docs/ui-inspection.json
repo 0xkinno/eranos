@@ -1,0 +1,498 @@
+[
+ {
+  "page": "landing",
+  "size": "desktop",
+  "fonts": {
+   "Bricolage": true,
+   "Instrument Serif": true,
+   "Hanken": true,
+   "JetBrains Mono": true
+  },
+  "svgs": [
+   {
+    "label": "A ring of circle members seen in perspec",
+    "x": 706,
+    "y": 205,
+    "w": 649,
+    "h": 467,
+    "inside": true
+   },
+   {
+    "label": "Three stewards own the circle's memory a",
+    "x": 763,
+    "y": 3654,
+    "w": 524,
+    "h": 309,
+    "inside": true
+   }
+  ],
+  "wide": [],
+  "overlap": false,
+  "h1font": "Bricolage",
+  "bodyfont": "Hanken",
+  "imgsBroken": 0,
+  "scrollW": 1440,
+  "vw": 1440,
+  "height": 6304
+ },
+ {
+  "page": "app",
+  "size": "desktop",
+  "fonts": {
+   "Bricolage": true,
+   "Instrument Serif": true,
+   "Hanken": true,
+   "JetBrains Mono": true
+  },
+  "svgs": [
+   {
+    "label": "ornament",
+    "x": 1059,
+    "y": 144,
+    "w": 220,
+    "h": 154,
+    "inside": true
+   },
+   {
+    "label": "Ring of circle members",
+    "x": 157,
+    "y": 386,
+    "w": 526,
+    "h": 237,
+    "inside": true
+   }
+  ],
+  "wide": [],
+  "overlap": null,
+  "h1font": "Bricolage",
+  "bodyfont": "Hanken",
+  "imgsBroken": 0,
+  "scrollW": 1440,
+  "vw": 1440,
+  "height": 1150
+ },
+ {
+  "page": "circle",
+  "size": "desktop",
+  "fonts": {
+   "Bricolage": true,
+   "Instrument Serif": false,
+   "Hanken": true,
+   "JetBrains Mono": true
+  },
+  "svgs": [
+   {
+    "label": "ornament",
+    "x": 1059,
+    "y": 141,
+    "w": 220,
+    "h": 154,
+    "inside": true
+   },
+   {
+    "label": "Ring of circle members",
+    "x": 157,
+    "y": 379,
+    "w": 526,
+    "h": 237,
+    "inside": true
+   }
+  ],
+  "wide": [],
+  "overlap": null,
+  "h1font": "Bricolage",
+  "bodyfont": "Hanken",
+  "imgsBroken": 0,
+  "scrollW": 1440,
+  "vw": 1440,
+  "height": 2124
+ },
+ {
+  "page": "memory",
+  "size": "desktop",
+  "fonts": {
+   "Bricolage": true,
+   "Instrument Serif": true,
+   "Hanken": true,
+   "JetBrains Mono": true
+  },
+  "svgs": [
+   {
+    "label": "ornament",
+    "x": 1059,
+    "y": 141,
+    "w": 220,
+    "h": 154,
+    "inside": true
+   }
+  ],
+  "wide": [],
+  "overlap": null,
+  "h1font": "Bricolage",
+  "bodyfont": "Hanken",
+  "imgsBroken": 0,
+  "scrollW": 1440,
+  "vw": 1440,
+  "height": 1795
+ },
+ {
+  "page": "join",
+  "size": "desktop",
+  "fonts": {
+   "Bricolage": true,
+   "Instrument Serif": true,
+   "Hanken": true,
+   "JetBrains Mono": true
+  },
+  "svgs": [
+   {
+    "label": "ornament",
+    "x": 899,
+    "y": 141,
+    "w": 220,
+    "h": 154,
+    "inside": true
+   }
+  ],
+  "wide": [],
+  "overlap": null,
+  "h1font": "Bricolage",
+  "bodyfont": "Hanken",
+  "imgsBroken": 0,
+  "scrollW": 1440,
+  "vw": 1440,
+  "height": 1344
+ },
+ {
+  "page": "stewards",
+  "size": "desktop",
+  "fonts": {
+   "Bricolage": true,
+   "Instrument Serif": true,
+   "Hanken": true,
+   "JetBrains Mono": true
+  },
+  "svgs": [
+   {
+    "label": "ornament",
+    "x": 1059,
+    "y": 141,
+    "w": 220,
+    "h": 154,
+    "inside": true
+   }
+  ],
+  "wide": [],
+  "overlap": null,
+  "h1font": "Bricolage",
+  "bodyfont": "Hanken",
+  "imgsBroken": 0,
+  "scrollW": 1440,
+  "vw": 1440,
+  "height": 1016
+ },
+ {
+  "page": "proof",
+  "size": "desktop",
+  "fonts": {
+   "Bricolage": true,
+   "Instrument Serif": true,
+   "Hanken": true,
+   "JetBrains Mono": true
+  },
+  "svgs": [
+   {
+    "label": "ornament",
+    "x": 1059,
+    "y": 158,
+    "w": 220,
+    "h": 154,
+    "inside": true
+   }
+  ],
+  "wide": [],
+  "overlap": null,
+  "h1font": "Bricolage",
+  "bodyfont": "Hanken",
+  "imgsBroken": 0,
+  "scrollW": 1440,
+  "vw": 1440,
+  "height": 6080
+ },
+ {
+  "page": "judge",
+  "size": "desktop",
+  "fonts": {
+   "Bricolage": true,
+   "Instrument Serif": true,
+   "Hanken": true,
+   "JetBrains Mono": true
+  },
+  "svgs": [
+   {
+    "label": "ornament",
+    "x": 1059,
+    "y": 144,
+    "w": 220,
+    "h": 154,
+    "inside": true
+   }
+  ],
+  "wide": [],
+  "overlap": null,
+  "h1font": "Bricolage",
+  "bodyfont": "Hanken",
+  "imgsBroken": 0,
+  "scrollW": 1440,
+  "vw": 1440,
+  "height": 1727
+ },
+ {
+  "page": "landing",
+  "size": "mobile",
+  "fonts": {
+   "Bricolage": true,
+   "Instrument Serif": true,
+   "Hanken": true,
+   "JetBrains Mono": true
+  },
+  "svgs": [
+   {
+    "label": "A ring of circle members seen in perspec",
+    "x": 16,
+    "y": 691,
+    "w": 358,
+    "h": 257,
+    "inside": true
+   },
+   {
+    "label": "Three stewards own the circle's memory a",
+    "x": 39,
+    "y": 6572,
+    "w": 312,
+    "h": 184,
+    "inside": true
+   }
+  ],
+  "wide": [],
+  "overlap": false,
+  "h1font": "Bricolage",
+  "bodyfont": "Hanken",
+  "imgsBroken": 0,
+  "scrollW": 390,
+  "vw": 390,
+  "height": 10820
+ },
+ {
+  "page": "app",
+  "size": "mobile",
+  "fonts": {
+   "Bricolage": true,
+   "Instrument Serif": true,
+   "Hanken": true,
+   "JetBrains Mono": true
+  },
+  "svgs": [
+   {
+    "label": "ornament",
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0,
+    "inside": true
+   },
+   {
+    "label": "Ring of circle members",
+    "x": 43,
+    "y": 389,
+    "w": 304,
+    "h": 137,
+    "inside": true
+   }
+  ],
+  "wide": [],
+  "overlap": null,
+  "h1font": "Bricolage",
+  "bodyfont": "Hanken",
+  "imgsBroken": 0,
+  "scrollW": 390,
+  "vw": 390,
+  "height": 1676
+ },
+ {
+  "page": "circle",
+  "size": "mobile",
+  "fonts": {
+   "Bricolage": true,
+   "Instrument Serif": false,
+   "Hanken": true,
+   "JetBrains Mono": true
+  },
+  "svgs": [
+   {
+    "label": "ornament",
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0,
+    "inside": true
+   },
+   {
+    "label": "Ring of circle members",
+    "x": 43,
+    "y": 408,
+    "w": 304,
+    "h": 137,
+    "inside": true
+   }
+  ],
+  "wide": [],
+  "overlap": null,
+  "h1font": "Bricolage",
+  "bodyfont": "Hanken",
+  "imgsBroken": 0,
+  "scrollW": 390,
+  "vw": 390,
+  "height": 3605
+ },
+ {
+  "page": "memory",
+  "size": "mobile",
+  "fonts": {
+   "Bricolage": true,
+   "Instrument Serif": true,
+   "Hanken": true,
+   "JetBrains Mono": true
+  },
+  "svgs": [
+   {
+    "label": "ornament",
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0,
+    "inside": true
+   }
+  ],
+  "wide": [],
+  "overlap": null,
+  "h1font": "Bricolage",
+  "bodyfont": "Hanken",
+  "imgsBroken": 0,
+  "scrollW": 390,
+  "vw": 390,
+  "height": 3126
+ },
+ {
+  "page": "join",
+  "size": "mobile",
+  "fonts": {
+   "Bricolage": true,
+   "Instrument Serif": true,
+   "Hanken": true,
+   "JetBrains Mono": true
+  },
+  "svgs": [
+   {
+    "label": "ornament",
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0,
+    "inside": true
+   }
+  ],
+  "wide": [],
+  "overlap": null,
+  "h1font": "Bricolage",
+  "bodyfont": "Hanken",
+  "imgsBroken": 0,
+  "scrollW": 390,
+  "vw": 390,
+  "height": 1769
+ },
+ {
+  "page": "stewards",
+  "size": "mobile",
+  "fonts": {
+   "Bricolage": true,
+   "Instrument Serif": true,
+   "Hanken": true,
+   "JetBrains Mono": true
+  },
+  "svgs": [
+   {
+    "label": "ornament",
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0,
+    "inside": true
+   }
+  ],
+  "wide": [],
+  "overlap": null,
+  "h1font": "Bricolage",
+  "bodyfont": "Hanken",
+  "imgsBroken": 0,
+  "scrollW": 390,
+  "vw": 390,
+  "height": 1399
+ },
+ {
+  "page": "proof",
+  "size": "mobile",
+  "fonts": {
+   "Bricolage": true,
+   "Instrument Serif": true,
+   "Hanken": true,
+   "JetBrains Mono": true
+  },
+  "svgs": [
+   {
+    "label": "ornament",
+    "x": 0,
+    "y": 245,
+    "w": 0,
+    "h": 0,
+    "inside": true
+   }
+  ],
+  "wide": [],
+  "overlap": null,
+  "h1font": "Bricolage",
+  "bodyfont": "Hanken",
+  "imgsBroken": 0,
+  "scrollW": 390,
+  "vw": 390,
+  "height": 6896
+ },
+ {
+  "page": "judge",
+  "size": "mobile",
+  "fonts": {
+   "Bricolage": true,
+   "Instrument Serif": true,
+   "Hanken": true,
+   "JetBrains Mono": true
+  },
+  "svgs": [
+   {
+    "label": "ornament",
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0,
+    "inside": true
+   }
+  ],
+  "wide": [],
+  "overlap": null,
+  "h1font": "Bricolage",
+  "bodyfont": "Hanken",
+  "imgsBroken": 0,
+  "scrollW": 390,
+  "vw": 390,
+  "height": 2705
+ }
+]
