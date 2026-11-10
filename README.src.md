@@ -1,22 +1,53 @@
-# Eranos
+<p align="center"><img src="public/art/mark.svg" width="64" alt="Eranos mark"></p>
 
-[![live](https://img.shields.io/badge/live-eranos.vercel.app-5B3DF5)](https://eranos.vercel.app) [![ci](https://github.com/0xkinno/eranos/actions/workflows/ci.yml/badge.svg)](https://github.com/0xkinno/eranos/actions/workflows/ci.yml) [![licence](https://img.shields.io/badge/licence-MIT-2A1A7A)](LICENSE)
+<h1 align="center">Eranos</h1>
 
-**A savings circle with no collector: the money goes only to whoever's turn it is, and the circle owns its own memory.**
+<p align="center"><strong>A savings circle with no collector.<br>The money goes only to whoever's turn it is, and the circle owns its own memory.</strong></p>
+
+<p align="center">
+<a href="https://eranos.vercel.app">Live app</a> ·
+<a href="https://eranos.vercel.app/judge">60-second judge walk</a> ·
+<a href="https://eranos.vercel.app/proof">Live proof</a> ·
+<a href="docs/BLOG.md">Blog post</a> ·
+<a href="docs/EVIDENCE.md">Every transaction</a>
+</p>
+
+<p align="center">
+<a href="https://eranos.vercel.app"><img alt="live" src="https://img.shields.io/badge/live-eranos.vercel.app-1B66CC"></a>
+<img alt="Sui mainnet" src="https://img.shields.io/badge/Sui-mainnet-4DA2FF">
+<a href="https://github.com/0xkinno/eranos/actions/workflows/ci.yml"><img alt="ci" src="https://github.com/0xkinno/eranos/actions/workflows/ci.yml/badge.svg"></a>
+<img alt="licence" src="https://img.shields.io/badge/licence-MIT-0B2A5B">
+</p>
 
 ![Eranos landing page](docs/images/hero.png)
 
-Lucía Herrera (a fictional home-care worker in Houston) paid $200 a month into a ten-person tanda for seven months. July was her turn. The woman holding the money stopped answering her phone, and the notebook that said whose turn it was went with her. Eranos runs the circle with no collector: each member pays from their own wallet, a Sui contract pays the pot only to the member whose turn it is, and the circle's memory belongs to the circle.
+Lucía Herrera (a fictional home-care worker in Houston) paid $200 a month into a ten-person tanda for seven months. July was her turn. The woman holding the money stopped answering her phone, and the notebook that said whose turn it was went with her.
+
+**Eranos is the same circle with nobody in the middle.** Each member pays from their own wallet. A Sui contract pays the pot only to the member whose turn it is. The circle's memory, who paid when and who agreed to what, is kept by the circle itself on Walrus Memory, and it quietly changes how the circle works: reminders arrive when you actually get paid, and the next cycle's order reflects who really pays late.
+
+It is live, on Sui mainnet, with real payments you can verify in under a minute.
 
 | | |
 |---|---|
-| Live app | [eranos.vercel.app](https://eranos.vercel.app) |
-| For judges (60 seconds, no wallet) | [/judge](https://eranos.vercel.app/judge) |
-| Proof (live) | [/proof](https://eranos.vercel.app/proof) |
-| Demo video | pending, see docs/SUBMISSION_TOTALRECALL.md |
-| Blog post | draft in [docs/BLOG.md](docs/BLOG.md) |
-| Track | 03 Consumer Finance Apps, also entered for Best Walrus Memory and Best Use of Agent Payments |
-| Built with | Walrus Memory SDK 0.1.14, Tatum Sui gateway and Data API, Sui mainnet package `{{facts.package}}` |
+| **Live app** | [eranos.vercel.app](https://eranos.vercel.app) |
+| **Judges, no wallet needed** | [/judge](https://eranos.vercel.app/judge) (60 seconds) and the guided tour: [/?tour=1](https://eranos.vercel.app/?tour=1) |
+| **Proof, recomputed live** | [/proof](https://eranos.vercel.app/proof) |
+| **Demo video** | see [docs/SUBMISSION_TOTALRECALL.md](docs/SUBMISSION_TOTALRECALL.md) |
+| **Blog post** | [docs/BLOG.md](docs/BLOG.md) |
+| **Track** | 03 Consumer Finance Apps. Also entered for Best Walrus Memory and Best Use of Agent Payments |
+| **Built with** | Walrus Memory SDK 0.1.14, Tatum Sui gateway and Data API, Sui mainnet package `{{facts.package}}` |
+
+## Why this is different
+
+Every other savings app we looked at keeps the user's memory in an account the app owns. Eranos does the reverse, and enforces it where it cannot be argued with:
+
+1. **The circle owns its memory.** One Walrus Memory account per circle, owned by a 2-of-3 steward multisig. Every member holds their own delegate key, derived from their own wallet signature.
+2. **Money and memory move together.** Joining adds the member's key to the memory account and puts them on the contract's roll in one transaction. The contract reads the memory account and refuses to admit a member who has no memory key. It refuses to remove one who still has it. The two rolls cannot drift apart, and `/proof` checks that live.
+3. **A model's guess cannot decide anything.** Facts extracted from pasted chat wait in quarantine until the person they are about signs.
+4. **The keeper cannot invent a payment.** It writes only what Tatum can show on chain. We tried to make it lie. It refused.
+5. **An agent can pay for you, and only for you.** x402 payments where the payment *is* the contract call.
+
+![Product screens](docs/images/grid.png)
 
 ## Where the money goes
 

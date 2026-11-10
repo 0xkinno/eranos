@@ -5,9 +5,13 @@ const facts = JSON.parse(readFileSync("docs/FACTS.json", "utf8"));
 const ev = readFileSync("docs/evidence.jsonl", "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l)) as { label: string; digest: string | null }[];
 const get = (p: string) => p.split(".").reduce((o: any, k) => o?.[k], facts);
 const link = (d: string) => `[${d.slice(0, 8)}…](https://suiscan.xyz/mainnet/tx/${d})`;
-const out = readFileSync("README.src.md", "utf8")
+const render = (src: string) => readFileSync(src, "utf8")
   .replace(/\{\{facts\.([\w.]+)\}\}/g, (_, p) => { const v = get(p); if (v === undefined) throw new Error(`missing fact ${p}`); return String(v); })
   .replace(/\{\{tx:([^}]+)\}\}/g, (_, prefix) => { const e = ev.find((x) => x.label.startsWith(prefix) && x.digest && /^[1-9A-HJ-NP-Za-km-z]{43,44}$/.test(x.digest)); return e ? link(e.digest!) : "not yet recorded"; })
   .replace(/\{\{txs:([^}]+)\}\}/g, (_, prefix) => ev.filter((x) => x.label.startsWith(prefix) && x.digest && /^[1-9A-HJ-NP-Za-km-z]{43,44}$/.test(x.digest!)).map((e) => link(e.digest!)).join(", ") || "none yet");
-if (process.argv.includes("--check")) { if (readFileSync("README.md", "utf8") !== out) { console.error("README.md is out of date with FACTS.json. Run: npx tsx scripts/render-readme.ts"); process.exit(1); } console.log("README matches FACTS"); }
-else { writeFileSync("README.md", out); console.log("README.md rendered"); }
+const targets: [string, string][] = [["README.src.md", "README.md"], ["docs/BLOG.src.md", "docs/BLOG.md"]];
+for (const [src, dst] of targets) {
+  const out = render(src);
+  if (process.argv.includes("--check")) { if (readFileSync(dst, "utf8") !== out) { console.error(`${dst} is out of date with FACTS.json. Run: npx tsx scripts/render-readme.ts`); process.exit(1); } console.log(`${dst} matches FACTS`); }
+  else { writeFileSync(dst, out); console.log(`${dst} rendered`); }
+}
