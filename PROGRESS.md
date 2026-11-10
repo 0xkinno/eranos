@@ -7,7 +7,9 @@ Updated 2026-11-09 (submission closes 2026-11-10 17:00 UTC).
 - Sponsored contributions, 2 x402 agent payments, 1 payment from a browser wallet on the deployed site, keeper verification through Tatum, memory writes by members through the proxy.
 - P1 to P11 recorded in docs/PROOF.md with their limits. P12 counted by script. P13 not recorded.
 - Redesign in Sui light blue with Framer Motion, hand-drawn SVG scene, self-hosted fonts; Playwright inspection of fonts, SVG placement, overflow and contrast on the deployed site (docs/UI_INSPECTION.md).
-- Vitest and Move tests green. Browser suites: see TASK.md.
+- 68 Vitest and 24 Move tests green. 62 Playwright tests pass on the deployed site (responsive and axe on 7 viewports, wallet flows including a browser payment, guided tour, memory switch).
+- Reminders delivered in the app inside the interruption budget; deployed state in a Vercel Blob store; both proven on the live site (see PROOF P14 and /api/status).
+- Tatum AI Builder entered with disclosure (shell generated on ai.tatum.io, shipped product built with Claude Code).
 
 ## Blocked on Kinnoski
 - GitHub secrets ERANOS_URL and CRON_SECRET (P13, unattended tick).
