@@ -16,5 +16,5 @@ const BASE = process.argv[2] ?? "http://localhost:3111";
     const s = await fetch(`${BASE}/api/proposals/${p.id}/sign`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ signature: sig }) });
     last = await s.json(); console.log(`steward ${i + 1} signed:`, JSON.stringify(last));
   }
-  if (last.executed?.ok) evidence("start cycle 2: planner proposal citing memory lines, signed by stewards 1 and 2 through the proposals API", last.executed.digest, { order: p.reasons.map((o: { member: string; round: number; reason: string; cited: string[] }) => ({ round: o.round + 1, member: o.member, reason: o.reason, cited: o.cited })) });
+  if (last.executed?.ok) evidence("start cycle: planner proposal citing memory lines, signed by stewards 1 and 2 through the proposals API", last.executed.digest, { order: p.reasons.map((o: { member: string; round: number; reason: string; cited: string[] }) => ({ round: o.round + 1, member: o.member, reason: o.reason, cited: o.cited })) });
 })().catch((e) => { console.error(String(e?.message ?? e).slice(0, 600)); process.exit(1); });

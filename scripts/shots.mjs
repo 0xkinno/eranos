@@ -3,7 +3,7 @@ import { chromium } from "playwright";
 const base = process.argv[2] ?? "https://eranos.vercel.app";
 const C = process.env.DEMO_CIRCLE_ID;
 const b = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium", args: ["--no-sandbox"] });
-const ctx = await b.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1.5 });
+const ctx = await b.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1.5, reducedMotion: "reduce" });
 const p = await ctx.newPage();
 const hide = async () => { await p.addStyleTag({ content: "[data-testid=tour-start]{display:none!important}" }); };
 const settle = async () => { await p.evaluate(async () => { await document.fonts.ready; for (let y = 0; y < document.body.scrollHeight; y += 400) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 120)); } window.scrollTo(0, 0); await new Promise((r) => setTimeout(r, 1500)); }); };
@@ -19,6 +19,6 @@ await p.goto(`${base}/c/${C}/memory`, { waitUntil: "networkidle" }); await hide(
 await p.screenshot({ path: "docs/images/memory.png", clip: { x: 0, y: 0, width: 1440, height: 900 } });
 await p.goto(`${base}/proof`, { waitUntil: "networkidle" }); await hide(); await settle();
 await p.screenshot({ path: "docs/images/proof.png", clip: { x: 0, y: 0, width: 1440, height: 900 } });
-const m = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 }); const mp = await m.newPage();
+const m = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, reducedMotion: "reduce" }); const mp = await m.newPage();
 await mp.goto(base + "/", { waitUntil: "networkidle" }); await mp.waitForTimeout(2500); await mp.screenshot({ path: "docs/images/mobile.png" });
 await b.close();

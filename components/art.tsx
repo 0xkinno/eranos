@@ -68,7 +68,8 @@ export function HeroScene({ n = 5, paid = [] as boolean[], turn = 0 }: { n?: num
 }
 
 /** The membership diagram: stewards own the account, members hold keys, the contract reads both. */
-export function MembershipDiagram() {
+export function MembershipDiagram({ n = 5 }: { n?: number }) {
+  const x0 = 214 - (n - 1) * 34;
   return (
     <svg viewBox="0 0 560 330" role="img" aria-label="Three stewards own the circle's memory account. Each member holds one delegate key. The contract checks both rolls." style={{ width: "100%", height: "auto" }} data-testid="membership-diagram">
       <defs><linearGradient id="md" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#8CC8FF" /><stop offset="1" stopColor="#1B66CC" /></linearGradient></defs>
@@ -78,7 +79,7 @@ export function MembershipDiagram() {
       <rect x="342" y="112" width="156" height="58" rx="14" fill="rgba(255,255,255,.1)" stroke="#8CC8FF" /><text x="420" y="137" textAnchor="middle" fill="#fff" fontFamily="var(--display)" fontWeight="800" fontSize="15">Circle contract</text><text x="420" y="156" textAnchor="middle" fill="#B6CFF0" fontFamily="var(--mono)" fontSize="10.5">eranos::circle on Sui</text>
       <path d="M218 141 H342" stroke="#FF8A3D" strokeWidth="2" /><path d="M334 135 l8 6 -8 6" stroke="#FF8A3D" strokeWidth="2" fill="none" />
       <text x="280" y="131" textAnchor="middle" fill="#FFB98A" fontFamily="var(--mono)" fontSize="10.5">is_delegate?</text>
-      {[0, 1, 2, 3, 4].map((i) => (<g key={i}><path d={`M${74 + i * 68} 262 L ${140 + (i - 2) * 14} 170`} stroke="#8CC8FF" strokeOpacity=".55" /><circle cx={74 + i * 68} cy="276" r="19" fill="#fff" stroke="#4DA2FF" strokeWidth="1.5" /><g stroke="#1B66CC" fill="none" strokeWidth="1.5" strokeLinecap="round"><circle cx={69 + i * 68} cy="272" r="4.5" /><path d={`M${72.5 + i * 68} 275.5 L ${82 + i * 68} 285 M${79 + i * 68} 282 l3 -3`} /></g></g>))}
+      {Array.from({ length: n }, (_, i) => i).map((i) => (<g key={i}><path d={`M${x0 + i * 68} 262 L ${140 + (i - (n - 1) / 2) * 14} 170`} stroke="#8CC8FF" strokeOpacity=".55" /><circle cx={x0 + i * 68} cy="276" r="19" fill="#fff" stroke="#4DA2FF" strokeWidth="1.5" /><g stroke="#1B66CC" fill="none" strokeWidth="1.5" strokeLinecap="round"><circle cx={x0 - 5 + i * 68} cy="272" r="4.5" /><path d={`M${x0 - 1.5 + i * 68} 275.5 L ${x0 + 8 + i * 68} 285 M${x0 + 5 + i * 68} 282 l3 -3`} /></g></g>))}
       <text x="214" y="318" textAnchor="middle" fill="#B6CFF0" fontFamily="var(--mono)" fontSize="11" letterSpacing="1.2">ONE KEY PER MEMBER, DERIVED FROM THEIR WALLET</text>
     </svg>
   );

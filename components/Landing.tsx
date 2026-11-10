@@ -95,7 +95,7 @@ export function Landing({ d }: { d: LandingData }) {
               <span className="pill">access counter {d.roll.accessCounter}</span>
             </div>
             <p className="mono muted" style={{ marginTop: 12 }}>Checked live through Tatum. Revocation is forward only: it does not take back what a member already read.{d.leave ? <> Leave transaction <a href={`https://suiscan.xyz/mainnet/tx/${d.leave}`}>{d.leave.slice(0, 10)}…</a></> : null}</p></Reveal>
-          <Reveal delay={0.1}><div className="card dark" style={{ padding: 22, background: "linear-gradient(160deg, var(--deep), var(--navy))" }}><MembershipDiagram /></div></Reveal>
+          <Reveal delay={0.1}><div className="card dark" style={{ padding: 22, background: "linear-gradient(160deg, var(--deep), var(--navy))" }}><MembershipDiagram n={d.members.length || 5} /></div></Reveal>
         </div>
         <Stagger className="cards" gap={0.08}>
           {[[<IconShield key="a" />, "Only confirmed facts decide", "A model's guess waits in quarantine. Only the member it is about can sign it into the circle's decisions."], [<IconKey key="b" />, "Keys, not accounts", "Your memory key is derived from one wallet signature. It moves no money and is never stored."], [<IconSteward key="c" />, "Two of three to change anything", "Admitting, removing and starting a cycle need two steward signatures over the same bytes."]].map(([ic, t, p], i) => (
