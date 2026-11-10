@@ -14,9 +14,11 @@ const run = (c: string) => { try { return execSync(c, { encoding: "utf8", stdio:
     const done = new Set((await T.queryEvents(`${PKG}::circle::Contributed`, 343633600)).filter((e) => e.json.cycle === cycle).map((e) => `${e.json.round}:${ALL.indexOf(e.json.member) + 1}`));
     let acted = false;
     for (let r = 0; r < n; r++) {
-      const open = start + r * rms;
+      const open = start + r * rms, deadline = open + rms;
       for (const [k, m] of idx.entries()) {
         if (done.has(`${r}:${m}`)) continue;
+        // member 1 is left unpaid in round 3 until 3 minutes before the deadline so the keeper's reminder delivery can be observed for real
+        if (m === 1 && r === 2 && now < deadline - 180_000) continue;
         if (now >= open + 30_000 + k * 8_000) { let out = ""; for (let t = 0; t < 3 && !/pay true/.test(out); t++) out = run(`npx tsx scripts/cycle.ts pay ${m} ${r}`); console.log(new Date().toISOString(), "pay", m, r, out.trim().split("\n").pop()); acted = true; }
       }
     }
