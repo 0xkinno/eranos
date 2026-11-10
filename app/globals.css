@@ -11,7 +11,7 @@
 
 :root {
   --paper:#F4F9FF; --sky:#E6F2FF; --ice:#D3E8FF; --line:#BBD7F5; --ink:#0A1B33; --navy:#0B2A5B; --deep:#071A38;
-  --sui:#4DA2FF; --sui-deep:#1B66CC; --glow:#8CC8FF; --mint:#0E8F73; --mint-bg:#E3F7F1; --ember:#FF8A3D; --ember-ink:#9A4208; --mist:#4A6184;
+  --sui:#4DA2FF; --sui-deep:#1B66CC; --glow:#8CC8FF; --mint:#08705B; --mint-bg:#E3F7F1; --ember:#FF8A3D; --ember-ink:#9A4208; --mist:#4A6184;
   --display: "Bricolage", "Hanken", system-ui, sans-serif; --serif: "Instrument Serif", Georgia, serif; --ui: "Hanken", system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, monospace;
 }
 * { box-sizing: border-box; }

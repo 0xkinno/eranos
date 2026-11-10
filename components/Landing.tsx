@@ -46,7 +46,7 @@ export function Landing({ d }: { d: LandingData }) {
         </div>
       </section>
 
-      <div className="marquee" aria-label="The same circle has many names"><div className="track" aria-hidden>
+      <div className="marquee" role="region" aria-label="The same circle has many names"><div className="track" aria-hidden>
         {[...NAMES, ...NAMES].map(([a, b], i) => <span key={i}>{a}<small>{b}</small></span>)}
       </div></div>
 
