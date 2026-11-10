@@ -52,7 +52,9 @@ export async function deliver(c: DeliverCtx) {
   for (const d of due) {
     await kv.set(d.key, "sending");
     const line = formatLine({ type: "reminder", date: day, attrs: { cycle: String(cycle), round: String(round), member: d.member, n: String(d.n), sent: hhmm }, text: `Reminder ${d.n + 1} for round ${round + 1} sent in the app: ${d.reason}` });
-    const r = await c.remember(line, "keeper", d.key);
+    let r: { blob_id: string };
+    try { r = await c.remember(line, "keeper", d.key); }
+    catch (err) { await kv.set(d.key, ""); throw err; } // free the slot so the next tick can send it
     await kv.set(d.key, r.blob_id);
     await pushNotice({ id: d.key, member: d.member, kind: "reminder", at: now, text: noticeText("reminder", round, d.reason), cited: d.cited, cycle, round });
     sent++;

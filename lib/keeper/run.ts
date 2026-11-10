@@ -8,6 +8,7 @@ import { buildPayoutTx } from "@/lib/sui/ptb";
 import { tatum } from "@/lib/tatum/sui";
 import { CIRCLE_ID, MEMORY_ACCOUNT_ID, START_CHECKPOINT } from "@/lib/facts/stats";
 import { ERANOS_PKG } from "@/lib/config";
+import { withRateLimitRetry, isRateLimit } from "@/lib/memory/retry";
 
 export async function runKeeper() {
   const keeper = Ed25519Keypair.fromSecretKey(process.env.KEEPER_SUI_KEY!);
@@ -16,7 +17,7 @@ export async function runKeeper() {
   const t = tatum();
   const report = await tick({
     circleId: CIRCLE_ID, pkg: ERANOS_PKG, startCheckpoint: START_CHECKPOINT, sabotage: process.env.ERANOS_SABOTAGE || undefined,
-    remember: async (text, ns, key) => (await mem(ns).rememberAndWait(text, { namespace: ns, idempotencyKey: key } as never)) as { blob_id: string },
+    remember: async (text, ns, key) => (await withRateLimitRetry(() => mem(ns).rememberAndWait(text, { namespace: ns, idempotencyKey: key } as never))) as { blob_id: string },
     payout: async (round) => {
       const tx = buildPayoutTx({ eranosPkg: ERANOS_PKG, sender: keeper.toSuiAddress(), circleId: CIRCLE_ID, round });
       const bytes = await tx.build({ client: t.client });
@@ -26,6 +27,8 @@ export async function runKeeper() {
       return { digest: r.digest };
     },
   });
-  const delivered = await deliver({ circleId: CIRCLE_ID, pkg: ERANOS_PKG, startCheckpoint: START_CHECKPOINT, readMemories: () => readKnown(mem("known")), remember: async (text, ns, key) => (await mem(ns).rememberAndWait(text, { namespace: ns, idempotencyKey: key } as never)) as { blob_id: string } });
+  // a relayer limit that outlasts the retries defers delivery to the next tick (state is idempotent); any other error still fails the run
+  const delivered = await deliver({ circleId: CIRCLE_ID, pkg: ERANOS_PKG, startCheckpoint: START_CHECKPOINT, readMemories: () => readKnown(mem("known")), remember: async (text, ns, key) => (await withRateLimitRetry(() => mem(ns).rememberAndWait(text, { namespace: ns, idempotencyKey: key } as never))) as { blob_id: string } })
+    .catch((e: Error) => { if (isRateLimit(e) || /memory read failed/.test(e.message)) return { sent: 0, turns: 0, skipped: "Walrus Memory rate limit, will retry next tick" }; throw e; });
   return { ...report, delivered };
 }

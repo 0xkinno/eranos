@@ -37,3 +37,24 @@ describe("keeper tick", () => {
     expect(written.filter((w) => w.includes("0xeeee"))).toEqual([]);
   });
 });
+
+import { withRateLimitRetry, isRateLimit, retryAfterMs } from "@/lib/memory/retry";
+describe("relayer rate limit", () => {
+  const limit = new Error('Walrus Memory server error (429): {"error":"Rate limit exceeded","limit":"180 weighted-requests/min","retry_after_seconds":60}');
+  it("recognises a 429 and reads the wait, capped", () => { expect(isRateLimit(limit)).toBe(true); expect(retryAfterMs(limit)).toBe(45_000); expect(isRateLimit(new Error("boom"))).toBe(false); });
+  it("waits and retries a limit, then succeeds", async () => {
+    let n = 0; const waits: number[] = [];
+    const r = await withRateLimitRetry(async () => { if (n++ < 2) throw limit; return "ok"; }, { sleep: async (ms) => { waits.push(ms); } });
+    expect(r).toBe("ok"); expect(waits.length).toBe(2);
+  });
+  it("rethrows other errors at once and a limit that never lifts", async () => {
+    await expect(withRateLimitRetry(async () => { throw new Error("boom"); }, { sleep: async () => {} })).rejects.toThrow("boom");
+    await expect(withRateLimitRetry(async () => { throw limit; }, { sleep: async () => {} })).rejects.toThrow("429");
+  });
+  it("defers a limited write instead of failing the tick", async () => {
+    const { ctx } = mk({ remember: async () => { throw limit; } });
+    real.json.round = "7"; // a fresh key, so earlier tests' idempotence records do not skip it
+    const r = await tick({ ...ctx, circleId: CIRCLE });
+    expect(r.deferred?.length).toBeGreaterThan(0); expect(r.written.length).toBe(0);
+  });
+});

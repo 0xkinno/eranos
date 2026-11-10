@@ -6,6 +6,7 @@ import { formatLine } from "@/lib/memory/format";
 import { store } from "./store";
 import { txDigest } from "@/lib/sui/multisig";
 import { normalizeSuiAddress } from "@mysten/sui/utils";
+import { isRateLimit } from "@/lib/memory/retry";
 
 export interface Ctx {
   circleId: string; pkg: string; startCheckpoint: number;
@@ -13,7 +14,7 @@ export interface Ctx {
   payout?: (round: number) => Promise<{ digest: string }>;
   sabotage?: string;
 }
-export interface TickReport { at: string; verified: number; refused: { digest: string; why: string }[]; written: { key: string; blob_id: string }[]; payouts: string[]; skipped: number }
+export interface TickReport { at: string; verified: number; refused: { digest: string; why: string }[]; written: { key: string; blob_id: string }[]; payouts: string[]; skipped: number; deferred?: { key: string; why: string }[] }
 
 type Ev = { eventType: string; json: Record<string, string> | null };
 const evs = (tx: { events?: unknown }) => (tx.events ?? []) as Ev[];
@@ -55,9 +56,8 @@ export async function tick(c: Ctx): Promise<TickReport> {
     const deadline = (startMs.get(e.json.cycle) ?? 0) + (Number(e.json.round) + 1) * roundMs;
     const lateH = Math.max(0, (v.timestampMs - deadline) / 3_600_000);
     const text = formatLine({ type: "outcome", date: day(v.timestampMs), attrs: { cycle: e.json.cycle, round: e.json.round, member: e.json.member, late_h: lateH.toFixed(2), tx: e.digest }, text: `Member paid round ${Number(e.json.round) + 1} of cycle ${e.json.cycle}${lateH > 0 ? ` ${lateH.toFixed(2)} hours after the deadline` : " on time"}, verified on chain` });
-    const r = await c.remember(text, "known", key);
-    await kv.set(key, r.blob_id);
-    rep.written.push({ key, blob_id: r.blob_id });
+    try { const r = await c.remember(text, "known", key); await kv.set(key, r.blob_id); rep.written.push({ key, blob_id: r.blob_id }); }
+    catch (err) { if (!isRateLimit(err)) throw err; (rep.deferred ??= []).push({ key, why: "Walrus Memory rate limit, written next tick" }); }
   }
 
   for (const e of mine(payouts)) {
@@ -67,9 +67,8 @@ export async function tick(c: Ctx): Promise<TickReport> {
     const ev = evs(tx).find((x) => x.eventType.endsWith("::circle::PaidOut"));
     if (!ok || !ev) { rep.refused.push({ digest: e.digest, why: "payout transaction not verified" }); continue; }
     const text = formatLine({ type: "payout", date: day(Number(tx.timestampMs ?? Date.now())), attrs: { cycle: e.json.cycle, round: e.json.round, to: e.json.to, tx: e.digest }, text: `Round ${Number(e.json.round) + 1} pot of ${Number(e.json.amount) / 1e6} USDC went to the member whose turn it was` });
-    const r = await c.remember(text, "known", key);
-    await kv.set(key, r.blob_id);
-    rep.written.push({ key, blob_id: r.blob_id });
+    try { const r = await c.remember(text, "known", key); await kv.set(key, r.blob_id); rep.written.push({ key, blob_id: r.blob_id }); }
+    catch (err) { if (!isRateLimit(err)) throw err; (rep.deferred ??= []).push({ key, why: "Walrus Memory rate limit, written next tick" }); }
   }
 
   // payout when a round is full and not yet paid out

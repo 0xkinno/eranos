@@ -205,7 +205,7 @@ Everything here comes from [docs/FACTS.json](docs/FACTS.json) (live reads) and [
 | Join transactions (money and memory together) | 5 |
 | Agent payments over x402 (script agent) | 2 |
 | Memories on Walrus mainnet | 62 |
-| Vitest tests, Move tests | 68, 24 |
+| Vitest tests, Move tests | 72, 24 |
 | Average gas of a sampled transaction | 693484 MIST |
 
 **Memory off versus on** on the real circle: reminder times changed for 5 of 5 members, and the next cycle's order changed for 3 of 5. On a labelled synthetic replay of 12 invented member-months, memory removed false-early reminders (12 to 0) and did not reduce wasted ones (10 to 10). We report both. Reminders are delivered inside the app (not as phone push): the keeper sends them on schedule, skips members who already paid, and writes each one to memory.
