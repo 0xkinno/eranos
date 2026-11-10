@@ -102,3 +102,17 @@ Generated from docs/evidence.jsonl by scripts/gen-evidence.ts. Every row is a Su
 | 2026-11-10 09:39 | reminder delivery: 1 reminders and 0 turn notices sent in the app | refused before execution |
 | 2026-11-10 09:26 | reminder 1 for round 3 of cycle 2 sent in the app to member 1, written to memory (sent from the default schedule: an early version planned from an empty memory read, fixed afterwards) | Walrus blob `ErVU7LZ7SHpDN24k_klXbX8Kr2ofQQpcSph_65EUp7o` |
 | 2026-11-10 09:38 | reminder 2 for round 3 of cycle 2 sent in the app to member 1 from the memory plan (payday fact cited), written to memory; the budget of 2 per round was then full | Walrus blob `4fTJ4gTqaKqeTNAW3zJAzSZTp6AfxGZvw9lr-Q7SaA4` |
+| 2026-11-10 09:40 | member 1 pays round 2, 0.1 USDC, keeper sponsors gas | [4rGdEM2w8poM3uGqRgnSotRuYLKGbkhUFFhp7LkPb4yr](https://suiscan.xyz/mainnet/tx/4rGdEM2w8poM3uGqRgnSotRuYLKGbkhUFFhp7LkPb4yr) |
+| 2026-11-10 09:41 | keeper payout round 2 | [664qS5Q5FKwvZu8W6Htje88Yw56prqhbFahsCDorbwvx](https://suiscan.xyz/mainnet/tx/664qS5Q5FKwvZu8W6Htje88Yw56prqhbFahsCDorbwvx) |
+| 2026-11-10 09:41 | keeper tick run | Walrus blob `tick` |
+| 2026-11-10 09:42 | member 1 pays round 3, 0.1 USDC, keeper sponsors gas | [HwoCjyPeJH4TzSdaEDTg6NbjUSjxV4R4oBsUm8VQ19ky](https://suiscan.xyz/mainnet/tx/HwoCjyPeJH4TzSdaEDTg6NbjUSjxV4R4oBsUm8VQ19ky) |
+| 2026-11-10 09:43 | member 2 pays round 3, 0.1 USDC, keeper sponsors gas | [AKyu4jCMFbM1YkUosrf6PgRzGEzbQ2mccguTuMfuLoPE](https://suiscan.xyz/mainnet/tx/AKyu4jCMFbM1YkUosrf6PgRzGEzbQ2mccguTuMfuLoPE) |
+| 2026-11-10 09:43 | member 4 pays round 3, 0.1 USDC, keeper sponsors gas | [GkKfcZPZX7r6qEQpikPKPgANiDrH3gXLKCfHm3rdgmV](https://suiscan.xyz/mainnet/tx/GkKfcZPZX7r6qEQpikPKPgANiDrH3gXLKCfHm3rdgmV) |
+| 2026-11-10 09:44 | reminder delivery: 0 reminders and 1 turn notices sent in the app | refused before execution |
+| 2026-11-10 09:44 | keeper tick run | Walrus blob `tick` |
+| 2026-11-10 09:45 | member 5 pays round 3, 0.1 USDC, keeper sponsors gas | [6fMsNNmF5RRDh5mLJqJ4dLZiaCwAQ4eDLxGeJmzysu9A](https://suiscan.xyz/mainnet/tx/6fMsNNmF5RRDh5mLJqJ4dLZiaCwAQ4eDLxGeJmzysu9A) |
+| 2026-11-10 09:45 | keeper tick run | Walrus blob `tick` |
+| 2026-11-10 09:47 | keeper payout round 3 | [Arre9SzM6sUTfkPZSX8bjf9ErydJ3BxzoDJoCQ3aGjXx](https://suiscan.xyz/mainnet/tx/Arre9SzM6sUTfkPZSX8bjf9ErydJ3BxzoDJoCQ3aGjXx) |
+| 2026-11-10 09:47 | keeper tick run | Walrus blob `tick` |
+| 2026-11-10 09:48 | reminder delivery: 0 reminders and 1 turn notices sent in the app | refused before execution |
+| 2026-11-10 09:48 | keeper tick run | Walrus blob `tick` |

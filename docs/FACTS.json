@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-10T08:47:32.726Z",
+  "generatedAt": "2026-11-10T09:49:25.895Z",
   "package": "0xf56a7c35676c7486b2078822f5b3ae58e383ac47b9c189fe77c3df3ea03fe42e",
   "circle": {
     "id": "0xd50b0e10438c1fe18bc1f9896788080fc7662de94954da7ddfa1209ae13c4475",
@@ -7,22 +7,23 @@
     "contributionUsdc": 0.1
   },
   "memories": {
-    "total": 44,
+    "total": 62,
     "byNamespace": {
-      "known": 41,
+      "known": 57,
       "scribe": 1,
-      "heard": 2
+      "heard": 2,
+      "keeper": 2
     }
   },
   "chain": {
-    "contributions": 29,
-    "payouts": 6,
+    "contributions": 41,
+    "payouts": 9,
     "joinTransactions": 5,
     "x402Payments": 2,
-    "sponsoredContributions": 27
+    "sponsoredContributions": 39
   },
   "tests": {
-    "vitest": 62,
+    "vitest": 68,
     "move": 24
   },
   "p8": {
@@ -38,8 +39,8 @@
     "multiGetObjects": 1
   },
   "gas": {
-    "sampleCount": 32,
-    "avgMist": 815232
+    "sampleCount": 44,
+    "avgMist": 693484
   },
-  "usdcUsd": 0.99892568
+  "usdcUsd": 1.00130142
 }

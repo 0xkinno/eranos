@@ -12,3 +12,6 @@
 | 10 Nov 08:28 | A member pays from the browser on the deployed site, with a Playwright test wallet | "UI payment" row |
 | 10 Nov 08:40 | Cycle 1 complete (5 of 5 payouts), P8, leave proof (access counter 0 to 1, key refused) | PROOF.md |
 | 10 Nov 08:42 | Cycle 2 started with the memory-driven order, signed by two stewards | EVIDENCE.md "start cycle 2" |
+| 10 Nov 09:26 | In-app reminder delivery and "your turn landed" notices, inside the interruption budget | Inbox card on the circle page, `[reminder]` lines in memory |
+| 10 Nov 09:36 | Deployed state store on a Vercel Blob store, round-trip probe on /api/status | /api/status |
+| 10 Nov 09:49 | Cycle 2 complete (4 of 4 payouts) | circle page timeline |

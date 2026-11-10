@@ -61,7 +61,7 @@ Reality rung: **Sui mainnet, capped funds.** The demo circle has 4 members, pays
 | Member 1 joins: memory key and money roll in one transaction | [42Dsi8wX…](https://suiscan.xyz/mainnet/tx/42Dsi8wXBjxUNsQbN4q64BA7Sh7KMXUcZU3zhSeFuoyR) |
 | Member 2 joins | [5H8bHaM4…](https://suiscan.xyz/mainnet/tx/5H8bHaM43JmVZu7sWq9ztSfCsbVpwM3QDL4mKfFpBznZ) |
 | Cycle 1 starts | [2zwqECsH…](https://suiscan.xyz/mainnet/tx/2zwqECsHgoMsgPyJXGECwgZFdDEXv5crNJDvr2fVQbyP) |
-| Contributions with sponsored gas (27) | see [/proof](https://eranos.vercel.app/proof) |
+| Contributions with sponsored gas (39) | see [/proof](https://eranos.vercel.app/proof) |
 | Agent payments over x402 (2) | [3RLmStgo…](https://suiscan.xyz/mainnet/tx/3RLmStgoG5DbWADSEgNkovDYUoaQykZtTmJpzQ7tEwMW), [6F1rX2Mo…](https://suiscan.xyz/mainnet/tx/6F1rX2MoqosN4rZYnAiw1hNfMXrjUeeLZVd565bGjpjb) |
 | Payment from a browser wallet on the deployed site (sponsored gas, x402) | [6pYi47oE…](https://suiscan.xyz/mainnet/tx/6pYi47oEzChMSu7dK8bdcrAAgEFZfgUvPU8KgnjwxpiA) |
 | First payout | [CCRGJCgm…](https://suiscan.xyz/mainnet/tx/CCRGJCgmpCAk6RjLiLhNsKaegVTSFU982uitVHSjri93) |
@@ -165,7 +165,7 @@ sequenceDiagram
 - **Heard to known** needs the subject's wallet signature (`lib/memory/policy.ts`). Tested: a wrong signer, a signature over other text, and an unsigned fact are all refused.
 - **Learning loop:** member-stated paydays set reminder times, and verified late payments move the second reminder earlier and push a late payer later in the next cycle's order. Switch memory off on the landing page to see the default.
 - **Leave:** removing a key rotates the account's access counter. Revocation is forward only. It does not take back what a member already read.
-- **Memories on mainnet now:** 44 (41 in `known`).
+- **Memories on mainnet now:** 62 (57 in `known`).
 
 ## How Tatum is used
 
@@ -199,13 +199,13 @@ Everything here comes from [docs/FACTS.json](docs/FACTS.json) (live reads) and [
 
 | What | Number |
 |---|---|
-| Contributions verified on chain through Tatum | 29 |
-| Payouts, each to the scheduled member | 6 |
+| Contributions verified on chain through Tatum | 41 |
+| Payouts, each to the scheduled member | 9 |
 | Join transactions (money and memory together) | 5 |
 | Agent payments over x402 (script agent) | 2 |
-| Memories on Walrus mainnet | 44 |
-| Vitest tests, Move tests | 62, 24 |
-| Average gas of a sampled transaction | 815232 MIST |
+| Memories on Walrus mainnet | 62 |
+| Vitest tests, Move tests | 68, 24 |
+| Average gas of a sampled transaction | 693484 MIST |
 
 **Memory off versus on** on the real circle: reminder times changed for 5 of 5 members, and the next cycle's order changed for 3 of 5. On a labelled synthetic replay of 12 invented member-months, memory removed false-early reminders (12 to 0) and did not reduce wasted ones (10 to 10). We report both. Reminders are delivered inside the app (not as phone push): the keeper sends them on schedule, skips members who already paid, and writes each one to memory.
 

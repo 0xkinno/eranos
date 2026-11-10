@@ -10,7 +10,7 @@ Rotating savings circles are called ajo in Lagos, susu in Accra, tanda in Housto
 
 Each member pays their round from their own wallet. A Sui contract pays the pot only to the member whose turn it is, and only when everyone has paid. The circle's memory belongs to the circle: a Walrus Memory account owned by three stewards (any two sign), with one delegate key per member.
 
-Right now the demo circle has 4 members paying 0.1 USDC per round, on 20-minute rounds so you can watch a full cycle. On mainnet so far: 29 verified contributions, 6 payouts, 2 payments made by an agent over x402, and 44 memories on Walrus.
+Right now the demo circle has 4 members paying 0.1 USDC per round, on 20-minute rounds so you can watch a full cycle. On mainnet so far: 41 verified contributions, 9 payouts, 2 payments made by an agent over x402, and 62 memories on Walrus.
 
 ## How it uses Walrus Memory
 
