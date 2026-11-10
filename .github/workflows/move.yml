@@ -1,0 +1,20 @@
+name: move tests
+on:
+  push:
+    paths: ["move/**", ".github/workflows/move.yml"]
+  pull_request:
+    paths: ["move/**"]
+jobs:
+  sui-move-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install the Sui CLI (pinned release)
+        run: |
+          mkdir -p "$HOME/sui" && cd "$HOME/sui"
+          curl -sSL --retry 4 -o sui.tgz https://github.com/MystenLabs/sui/releases/download/mainnet-v1.60.1/sui-mainnet-v1.60.1-ubuntu-x86_64.tgz
+          tar xzf sui.tgz ./sui && rm sui.tgz
+          echo "$HOME/sui" >> "$GITHUB_PATH"
+      - name: sui move test
+        working-directory: move/eranos
+        run: sui move test

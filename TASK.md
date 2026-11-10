@@ -42,7 +42,7 @@ Ask Kinnoski before every item marked **(ASK)**.
 - [x] `move/eranos` with `circle.move` (Part 6.1), generic over coin type
 - [x] All Move tests (happy path + every error constant), `sui move test` green; count recorded: 24 passed
 - [x] Publish to mainnet with keeper key (ASK), record package ID and digest in EVIDENCE.md
-- [ ] GitHub Action runs `sui move test` on push
+- [x] GitHub Action runs `sui move test` on push (workflow written; first remote run pending)
 
 ## Phase 5. Sui and Tatum libraries
 - [x] `lib/tatum/sui.ts` (throttle, counters, 402 fallback visible, typed helpers) + tests
