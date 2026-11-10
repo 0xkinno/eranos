@@ -6,6 +6,15 @@ import type { MemLine, StoredMemory } from "./format";
 export const confirmMessage = (circleId: string, heardId: string, text: string) =>
   new TextEncoder().encode(`Eranos confirm v1\ncircle: ${circleId}\nmemory: ${heardId}\nfact: ${text}\nThis signature confirms the fact above is about you and true. It moves no money.`);
 
+export const rejectMessage = (circleId: string, heardId: string) =>
+  new TextEncoder().encode(`Eranos reject v1\ncircle: ${circleId}\nmemory: ${heardId}\nThis signature rejects the fact as not true about you. It moves no money.`);
+
+/** The subject signs to reject. Returns true when the signature is theirs. */
+export async function verifyReject(p: { circleId: string; heard: StoredMemory; signatureB64: string }): Promise<boolean> {
+  const pk = await verifyPersonalMessageSignature(rejectMessage(p.circleId, p.heard.id), p.signatureB64).catch(() => null);
+  return Boolean(pk && pk.toSuiAddress() === p.heard.attrs.about);
+}
+
 const hex8 = (b: Uint8Array) => Array.from(b.slice(0, 4), (x) => x.toString(16).padStart(2, "0")).join("");
 export const sigRef = (signatureB64: string) => "sig#" + hex8(sha256(new TextEncoder().encode(signatureB64)));
 

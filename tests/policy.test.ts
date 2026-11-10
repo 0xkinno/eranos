@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { Ed25519Keypair } from "@mysten/sui/keypairs/ed25519";
-import { confirmMessage, promoteHeard, PolicyError, decisionMemories } from "@/lib/memory/policy";
+import { rejectMessage, verifyReject, confirmMessage, promoteHeard, PolicyError, decisionMemories } from "@/lib/memory/policy";
 import type { StoredMemory } from "@/lib/memory/format";
 
 const lucia = Ed25519Keypair.fromSecretKey(new Uint8Array(32).fill(1));
@@ -29,6 +29,12 @@ describe("heard to known policy", () => {
     const { signature } = await lucia.signPersonalMessage(confirmMessage("0xc", "h1", "Lucia pays after the 6th"));
     const k = await promoteHeard({ circleId: "0xc", heard, signatureB64: signature, today: "2026-11-11", editedText: "Lucia pays after the 6th" });
     expect(k.attrs.payday).toBeUndefined();
+  });
+  it("reject needs the subject's own signature", async () => {
+    const good = (await lucia.signPersonalMessage(rejectMessage("0xc", "h1"))).signature;
+    const bad = (await mallory.signPersonalMessage(rejectMessage("0xc", "h1"))).signature;
+    expect(await verifyReject({ circleId: "0xc", heard, signatureB64: good })).toBe(true);
+    expect(await verifyReject({ circleId: "0xc", heard, signatureB64: bad })).toBe(false);
   });
   it("decisions never read heard or unconfirmed facts", () => {
     const items: StoredMemory[] = [heard, { ...heard, id: "f", type: "fact" }, { ...heard, id: "g", type: "fact", attrs: { ...heard.attrs, confirmed: "sig#1" } }];

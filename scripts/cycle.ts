@@ -14,7 +14,7 @@ const addr = members.map((m) => m.toSuiAddress());
 
 export async function sponsoredPay(m: Ed25519Keypair, round: number, member = m.toSuiAddress()) {
   const coins = await T.client.core.listCoins({ owner: keeper.toSuiAddress(), coinType: "0x2::sui::SUI" });
-  const gas = coins.objects.slice(0, 1).map((c) => ({ objectId: c.objectId, version: c.version, digest: c.digest }));
+  const gas = coins.objects.sort((a, b) => Number(BigInt(b.balance) - BigInt(a.balance))).slice(0, 1).map((c) => ({ objectId: c.objectId, version: c.version, digest: c.digest }));
   const tx = buildContributeForTx({ eranosPkg: PKG, sender: m.toSuiAddress(), circleId: CIRCLE, round, member, amount: 100000n });
   const { bytes, keeperSig } = await sponsorTx(tx, { member: m.toSuiAddress(), keeper, gasCoins: gas, budgetMist: 20_000_000, client: T.client });
   const memberSig = (await m.signTransaction(bytes)).signature;
