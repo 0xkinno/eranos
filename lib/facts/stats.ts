@@ -1,5 +1,6 @@
 // Live numbers. Chain facts are recomputed from Tatum reads. Memory counts come from docs/FACTS.json (written by scripts/facts.ts from live listMemories).
 import { readFileSync, existsSync } from "node:fs";
+import { join } from "node:path";
 import { tatum } from "@/lib/tatum/sui";
 import { ERANOS_PKG, USDC } from "@/lib/config";
 
@@ -9,12 +10,12 @@ export const MEMORY_ACCOUNT_ID = process.env.DEMO_MEMORY_ACCOUNT_ID ?? "";
 
 export interface EvidenceRow { at: string; label: string; digest: string | null; [k: string]: unknown }
 export function evidence(): EvidenceRow[] {
-  const p = "docs/evidence.jsonl";
+  const p = join(process.cwd(), "docs/evidence.jsonl");
   if (!existsSync(p)) return [];
   return readFileSync(p, "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l) as EvidenceRow);
 }
 export function factsFile(): Record<string, unknown> {
-  const p = "docs/FACTS.json";
+  const p = join(process.cwd(), "docs/FACTS.json");
   return existsSync(p) ? (JSON.parse(readFileSync(p, "utf8")) as Record<string, unknown>) : {};
 }
 
