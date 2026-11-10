@@ -17,6 +17,10 @@ export async function GET() {
     probe("sui-graphql", async () => (await t.checkpoint())?.sequenceNumber),
     probe("walrus-memory-relayer", async () => (await (await fetch(`${MEMWAL_RELAYER}/health`, { cache: "no-store" })).json()).status),
   ]);
-  const kv = await probe(`state-store (${store().kind})`, async () => { const v = String(Date.now()); await store().set("status:ping", v); return (await store().get("status:ping")) === v ? "write and read back ok" : Promise.reject(new Error("read back did not match")); });
+  const kv = await probe(`state-store (${store().kind})`, async () => {
+    const v = String(Date.now()); await store().set("status:ping", v);
+    for (let i = 1; i <= 12; i++) { if ((await store().get("status:ping")) === v) return `write and read back ok after ${i} read${i > 1 ? "s" : ""}`; await new Promise((r) => setTimeout(r, 500)); }
+    throw new Error("read back did not match within 6 seconds");
+  });
   return NextResponse.json({ app: "eranos", probes: [chain, relayer, kv], provider: t.status(), config: { memwalPackage: MEMWAL_PKG, eranosPackage: ERANOS_PKG || null } });
 }
