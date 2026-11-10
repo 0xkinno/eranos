@@ -23,6 +23,7 @@ export default function CirclePage({ params }: { params: Promise<{ id: string }>
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState<{ digest: string } | null>(null);
+  const [paidRound, setPaidRound] = useState<number | null>(null);
   const [rate, setRate] = useState<{ MXN?: number } | null>(null);
   const [notices, setNotices] = useState<{ id: string; kind: string; at: number; text: string }[]>([]);
   const load = useCallback(() => fetch(`/api/circles/${id}`).then((r) => r.json()).then((d) => (d.error ? setErr(d.error) : (setC(d), setErr("")))).catch((e) => setErr(String(e))), [id]);
@@ -41,13 +42,13 @@ export default function CirclePage({ params }: { params: Promise<{ id: string }>
   const turnMember = c.order[round];
   const turnIdx = turnMember ? c.members.indexOf(turnMember) : null;
   const myTurn = me && turnMember === me;
-  const iPaid = me ? paidNow.includes(me) : false;
+  const iPaid = (me ? paidNow.includes(me) : false) || (done !== null && round === paidRound);
   const left = Math.max(0, c.cycleStartMs + (round + 1) * c.roundMs - Date.now());
   const pay = async () => {
     setBusy(true); setErr(""); setDone(null);
     try {
       const r = await payRoundX402({ circleId: id, round, eranosPkg: PKG, signer: { address: me!, signTransaction: async (tx) => { const s = await kit.signTransaction({ transaction: tx }); return { bytes: s.bytes, signature: s.signature }; } } });
-      setDone(r); load();
+      setDone(r); setPaidRound(round); load(); setTimeout(load, 6000); setTimeout(load, 14000);
     } catch (e) { setErr(String((e as Error).message)); } finally { setBusy(false); }
   };
   return (
@@ -62,7 +63,7 @@ export default function CirclePage({ params }: { params: Promise<{ id: string }>
           <p className="eyebrow">This round</p>
           <div className="big" style={{ marginTop: 8 }}>{(c.contribution / 1e6).toFixed(2)} USDC</div>
           {rate?.MXN ? <p className="mono muted">about {(c.contribution / 1e6 * rate.MXN).toFixed(2)} MXN · rate from Tatum</p> : null}
-          <p style={{ marginTop: 12 }} data-testid="round-status">{full ? "Everyone has paid. The pot can go out." : `${paidNow.length} of ${c.members.length} paid. ${Math.ceil(left / 60000)} min left in this round.`}</p>
+          <p style={{ marginTop: 12 }} data-testid="round-status">{full ? "Everyone has paid. The pot can go out." : `${paidNow.length + (done && me && !paidNow.includes(me) && round === paidRound ? 1 : 0)} of ${c.members.length} paid. ${Math.ceil(left / 60000)} min left in this round.`}</p>
           {turnMember ? <p style={{ marginTop: 6 }}><span className="pill turn">Turn</span> member {turnIdx! + 1} <span className="mono muted">{short(turnMember)}</span>{myTurn ? " (you)" : ""}</p> : null}
           <div className="spacer" />
           {!conn.isConnected ? <div className="notice">Connect a wallet to pay your round. Gas is covered.</div>
@@ -80,7 +81,7 @@ export default function CirclePage({ params }: { params: Promise<{ id: string }>
         </Glow>) : null}
       <h2 style={{ marginTop: 48, fontSize: "1.75rem" }}>Timeline</h2>
       <div className="scroll-x" tabIndex={0} role="region" aria-label="Scrollable table"><table className="t" style={{ marginTop: 12 }}><thead><tr><th>Round</th><th>Draws</th><th>Paid</th><th>Pot</th></tr></thead><tbody>
-        {c.order.map((m, r) => { const po = c.payouts.find((p) => p.round === r); const n = (c.paid[String(r)] ?? []).length; return (
+        {c.order.map((m, r) => { const po = c.payouts.find((p) => p.round === r && p.cycle === c.cycle); const n = (c.paid[String(r)] ?? []).length; return (
           <tr key={r} data-testid={`round-${r}`}><td>{r + 1}</td><td>Member {c.members.indexOf(m) + 1} <span className="mono muted">{short(m)}</span></td><td>{n} of {c.members.length}</td>
             <td>{po ? <a href={`https://suiscan.xyz/mainnet/tx/${po.digest}`}>paid out · {po.digest.slice(0, 8)}…</a> : r > round ? "not open" : n === c.members.length ? "ready to pay out" : `waiting: ${c.members.length - n} to pay`}</td></tr>); })}
       </tbody></table></div>

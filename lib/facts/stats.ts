@@ -23,7 +23,7 @@ export interface CircleView {
   id: string; name: string; stewards: string; memoryAccount: string; contribution: number; roundMs: number; cycle: number; cycleStartMs: number;
   members: string[]; order: string[]; pot: number; paidOut: boolean[];
   paid: Record<string, string[]>; // round -> members paid (this cycle)
-  currentRound: number; payouts: { round: number; to: string; digest: string }[];
+  currentRound: number; payouts: { round: number; to: string; digest: string; cycle: number }[];
   roll: { money: number; memory: number; agree: boolean; accessCounter: number; delegateCount: number };
   provider: string;
 }
@@ -52,7 +52,7 @@ export async function circleView(id = CIRCLE_ID): Promise<CircleView> {
     contribution: Number(c.contribution), roundMs, cycle, cycleStartMs: startMs, members, order: (c.order as string[]) ?? [],
     pot: Number(c.pot), paidOut: (c.paid_out as boolean[]) ?? [], paid,
     currentRound: startMs ? Math.min(Math.floor((Date.now() - startMs) / roundMs), Math.max(0, members.length - 1)) : 0,
-    payouts: payouts.filter((e) => e.json.circle === id).map((e) => ({ round: Number(e.json.round), to: e.json.to, digest: e.digest })),
+    payouts: payouts.filter((e) => e.json.circle === id).map((e) => ({ round: Number(e.json.round), to: e.json.to, digest: e.digest, cycle: Number(e.json.cycle) })),
     roll: { money, memory, agree: money === memory, accessCounter: acct.accessCounterVersion, delegateCount: acct.delegateKeys.length },
     provider: t.provider,
   };
