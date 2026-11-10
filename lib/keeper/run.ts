@@ -1,6 +1,8 @@
 // Server-side keeper run, used by the cron route. Same tick as scripts/keeper.ts.
 import { Ed25519Keypair } from "@mysten/sui/keypairs/ed25519";
 import { tick } from "./tick";
+import { deliver } from "./deliver";
+import { readKnown } from "@/lib/memory/read";
 import { keeperMemory } from "@/lib/memory/client";
 import { buildPayoutTx } from "@/lib/sui/ptb";
 import { tatum } from "@/lib/tatum/sui";
@@ -12,7 +14,7 @@ export async function runKeeper() {
   const mems: Record<string, ReturnType<typeof keeperMemory>> = {};
   const mem = (ns: string) => (mems[ns] ??= keeperMemory(MEMORY_ACCOUNT_ID, ns));
   const t = tatum();
-  return tick({
+  const report = await tick({
     circleId: CIRCLE_ID, pkg: ERANOS_PKG, startCheckpoint: START_CHECKPOINT, sabotage: process.env.ERANOS_SABOTAGE || undefined,
     remember: async (text, ns, key) => (await mem(ns).rememberAndWait(text, { namespace: ns, idempotencyKey: key } as never)) as { blob_id: string },
     payout: async (round) => {
@@ -24,4 +26,6 @@ export async function runKeeper() {
       return { digest: r.digest };
     },
   });
+  const delivered = await deliver({ circleId: CIRCLE_ID, pkg: ERANOS_PKG, startCheckpoint: START_CHECKPOINT, readMemories: () => readKnown(mem("known")), remember: async (text, ns, key) => (await mem(ns).rememberAndWait(text, { namespace: ns, idempotencyKey: key } as never)) as { blob_id: string } });
+  return { ...report, delivered };
 }

@@ -24,10 +24,13 @@ export default function CirclePage({ params }: { params: Promise<{ id: string }>
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState<{ digest: string } | null>(null);
   const [rate, setRate] = useState<{ MXN?: number } | null>(null);
+  const [notices, setNotices] = useState<{ id: string; kind: string; at: number; text: string }[]>([]);
   const load = useCallback(() => fetch(`/api/circles/${id}`).then((r) => r.json()).then((d) => (d.error ? setErr(d.error) : (setC(d), setErr("")))).catch((e) => setErr(String(e))), [id]);
   useEffect(() => { load(); const t = setInterval(load, 12_000); return () => clearInterval(t); }, [load]);
   useEffect(() => { fetch("/api/rate?c=MXN").then((r) => r.json()).then((d) => setRate({ MXN: d.value })).catch(() => {}); }, []);
 
+  const meAddr = conn.account?.address;
+  useEffect(() => { if (!meAddr) { setNotices([]); return; } fetch(`/api/reminders?member=${meAddr}`).then((r) => r.json()).then((d) => setNotices(d.notices ?? [])).catch(() => {}); }, [meAddr, c?.currentRound]);
   if (err && !c) return <div className="app wrap"><div className="notice warn">Could not read the circle: {err}</div></div>;
   if (!c) return <div className="app wrap"><div className="notice" aria-busy="true">Reading the circle through Tatum…</div></div>;
   const me = conn.account?.address;
@@ -70,6 +73,11 @@ export default function CirclePage({ params }: { params: Promise<{ id: string }>
           {err ? <div className="notice warn" style={{ marginTop: 10 }} role="alert" data-testid="pay-error">{err}</div> : null}
         </Glow>
       </div>
+      {me && myIdx >= 0 ? (
+        <Glow style={{ marginTop: 20 }} data-testid="inbox"><div className="row" style={{ justifyContent: "space-between" }}><h3>Reminders for you</h3><span className="pill">in the app · at most 2 a round · quiet 21:00 to 08:00</span></div>
+          {notices.length === 0 ? <p className="muted" style={{ marginTop: 10 }}>Nothing waiting. If a round opens and you have not paid, the keeper sends one here at the time your memory says money arrives.</p>
+            : <div style={{ display: "grid", gap: 8, marginTop: 12 }}>{notices.slice(0, 4).map((n) => <div key={n.id} className="memline"><span className={n.kind === "turn" ? "pill turn" : "pill"}>{n.kind === "turn" ? "your turn" : "reminder"}</span> {n.text}<div className="muted">{new Date(n.at).toISOString().slice(11, 16)} UTC</div></div>)}{notices.length > 4 ? <p className="mono muted">{notices.length - 4} older notices cleared into this summary.</p> : null}</div>}
+        </Glow>) : null}
       <h2 style={{ marginTop: 48, fontSize: "1.75rem" }}>Timeline</h2>
       <div className="scroll-x" tabIndex={0} role="region" aria-label="Scrollable table"><table className="t" style={{ marginTop: 12 }}><thead><tr><th>Round</th><th>Draws</th><th>Paid</th><th>Pot</th></tr></thead><tbody>
         {c.order.map((m, r) => { const po = c.payouts.find((p) => p.round === r); const n = (c.paid[String(r)] ?? []).length; return (

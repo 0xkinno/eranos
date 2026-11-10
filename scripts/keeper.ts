@@ -2,6 +2,8 @@
 process.env.ERANOS_LOCAL_STATE ??= ".keeper-state.json";
 import { keeper, execSingle, evidence } from "./chain";
 import { tick } from "@/lib/keeper/tick";
+import { deliver } from "@/lib/keeper/deliver";
+import { readKnown } from "@/lib/memory/read";
 import { keeperMemory } from "@/lib/memory/client";
 import { buildPayoutTx } from "@/lib/sui/ptb";
 
@@ -15,6 +17,8 @@ import { buildPayoutTx } from "@/lib/sui/ptb";
     remember: async (text, ns, key) => mem(ns).rememberAndWait(text, { namespace: ns, idempotencyKey: key } as never) as Promise<{ blob_id: string }>,
     payout: async (round) => { const o = await execSingle(buildPayoutTx({ eranosPkg: process.env.ERANOS_PKG!, sender: keeper.toSuiAddress(), circleId: process.env.DEMO_CIRCLE_ID!, round }), keeper); if (!o.success) throw new Error(o.error); evidence(`keeper payout round ${round}`, o.digest); return { digest: o.digest }; },
   });
-  console.log(JSON.stringify(rep, null, 1));
+  const delivered = await deliver({ circleId: process.env.DEMO_CIRCLE_ID!, pkg: process.env.ERANOS_PKG!, startCheckpoint: Number(process.env.ERANOS_START_CHECKPOINT ?? 343633600), readMemories: () => readKnown(mem("known")), remember: async (text, ns, key) => mem(ns).rememberAndWait(text, { namespace: ns, idempotencyKey: key } as never) as Promise<{ blob_id: string }> });
+  if (delivered.sent || delivered.turns) evidence(`reminder delivery: ${delivered.sent} reminders and ${delivered.turns} turn notices sent in the app`, null, { delivered });
+  console.log(JSON.stringify({ ...rep, delivered }, null, 1));
   if (rep.written.length || rep.payouts.length || rep.refused.length) evidence("keeper tick run" + (process.env.ERANOS_SABOTAGE ? ` (sabotage=${process.env.ERANOS_SABOTAGE})` : ""), "tick", { report: rep });
 })().catch((e) => { console.error(String(e?.message ?? e).slice(0, 900)); process.exit(1); });

@@ -8,7 +8,7 @@ export const EWMA_ALPHA = 0.5;
 
 export interface Round { openMs: number; deadlineMs: number }
 export interface Reminder { atMs: number; reason: string; cited: string[] }
-export interface MemberPlan { member: string; reminders: Reminder[]; memoryUsed: boolean }
+export interface MemberPlan { member: string; reminders: Reminder[]; memoryUsed: boolean; tz: string }
 
 export function ewmaLateness(outcomes: StoredMemory[]): number {
   const sorted = [...outcomes].sort((a, b) => (a.date + (a.attrs.cycle ?? "") + (a.attrs.round ?? "")).localeCompare(b.date + (b.attrs.cycle ?? "") + (b.attrs.round ?? "")));
@@ -96,6 +96,6 @@ export function planMember(p: {
     .map((r) => ({ ...r, atMs: Math.round(shiftOutOfQuiet(r.atMs, tz, p.round, enforce)) }))
     .sort((a, b) => a.atMs - b.atMs)
     .slice(0, remindersLeft);
-  return { member: p.member, reminders: final, memoryUsed: used };
+  return { member: p.member, reminders: final, memoryUsed: used, tz };
 }
 const f2 = (f: StoredMemory) => f.attrs.payday ?? `${Math.round(Number(f.attrs.pays_at) * 100)}% mark`;
