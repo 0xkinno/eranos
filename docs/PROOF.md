@@ -16,6 +16,7 @@ Results of the proof plan. Every row points at a Sui mainnet transaction, a Walr
 | P10 | The keeper cannot invent a payment | With the fault switch on, Tatum answered "Transaction not found" for the claimed payment and nothing was written | EVIDENCE: sabotage tick row, `tests/keeper.test.ts` |
 | P11 | The memory survives the app | A fresh process with no database, no Redis and no env file, given only a member key and the account ID, recalled 37 lines and reproduced the reminder schedule and order | `scripts/portable.ts`, EVIDENCE: P11 row |
 | P12 | At least 10 memories on mainnet | See `docs/FACTS.json` (counted by `scripts/facts.ts` from live `listMemories`) | FACTS |
+| P14 | Reminders are delivered inside the budget | Member 1 was left unpaid in round 3 of cycle 2. The keeper sent exactly 2 in-app reminders (the budget), each written to memory as a `[reminder]` line, and sent none once the budget was full or the member had paid. The first went out on the default schedule because an early version planned from an empty memory read (fixed: it now refuses to plan from an empty read). The second came from the memory plan and cites the member's own payday fact. "Your turn landed" notices were delivered for every payout | EVIDENCE: reminder rows, `tests/reminders.test.ts` |
 | P13 | Unattended run | Not recorded. It needs the GitHub secrets `ERANOS_URL` and `CRON_SECRET`. The workflow `.github/workflows/tick.yml` and the route `/api/cron/tick` are written | pending |
 
 ## P8: memory off versus on, every demo member
@@ -41,7 +42,7 @@ A reminder can be wrong in two ways: it arrives before the member has been paid 
 | Memory off (round open, 24 hours before deadline) | 24 | 12 | 10 |
 | Memory on (payday, then a nudge) | 24 | 0 | 10 |
 
-Memory removes the false-early reminders. It does not reduce wasted ones: the planner schedules a second nudge whether or not the member has paid. A live sender would skip it for members who already paid. **Reminder delivery is not built.** Eranos computes and shows the schedule. Nothing is sent to a phone yet.
+Memory removes the false-early reminders. It does not reduce wasted ones: the planner schedules a second nudge whether or not the member has paid. The delivery step does skip members who already paid, so the replay overstates waste for the live system; the replay scores the plan, not the sends. **Delivery is in the app only** (inbox card on the circle page). Nothing is sent to a phone, email or SMS.
 
 Admission screening: the Tatum address check accepted all 5 demo wallets as "not listed". Whether Tatum's sources cover Sui is unproven, so this is not a safety claim. Flagged: 0. Untested: any real-world flagged address.
 
@@ -50,5 +51,5 @@ Admission screening: the Tatum address check accepted all 5 demo wallets as "not
 - The P2 and P5 refusals are caught at transaction resolution, so no failed transaction is on chain.
 - A Seal key request after leaving was not run.
 - The remember-to-recall lag was measured twice (about 2.6 seconds), not over 30 writes. The 30-write study and points-per-round were not done.
-- Steward proposals live in memory on the deployed site until a Redis store is connected. Cycle 2 was proposed and signed through the same API on a local server.
+- Cycle 2 was proposed and signed through the proposals API on a local server. The deployed site now stores proposals in a Vercel Blob store (state-store probe on /api/status), but a deployed proposal-to-execution run was not recorded.
 - zkLogin wallets cannot be stewards or derive a memory key.

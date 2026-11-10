@@ -207,7 +207,7 @@ Everything here comes from [docs/FACTS.json](docs/FACTS.json) (live reads) and [
 | Vitest tests, Move tests | 62, 24 |
 | Average gas of a sampled transaction | 815232 MIST |
 
-**Memory off versus on** on the real circle: reminder times changed for 5 of 5 members, and the next cycle's order changed for 3 of 5. On a labelled synthetic replay of 12 invented member-months, memory removed false-early reminders (12 to 0) and did not reduce wasted ones (10 to 10). We report both. Reminder delivery to phones is not built: Eranos computes and shows the schedule.
+**Memory off versus on** on the real circle: reminder times changed for 5 of 5 members, and the next cycle's order changed for 3 of 5. On a labelled synthetic replay of 12 invented member-months, memory removed false-early reminders (12 to 0) and did not reduce wasted ones (10 to 10). We report both. Reminders are delivered inside the app (not as phone push): the keeper sends them on schedule, skips members who already paid, and writes each one to memory.
 
 ![Memory off and on](docs/images/memory-switch.png)
 
@@ -232,14 +232,15 @@ Sui light blue, editorial type, no crypto-dashboard look. Bricolage Grotesque, I
 | Address screening | endpoint accepts Sui addresses, source coverage for Sui unproven |
 | zkLogin wallets as stewards or memory key holders | designed out, not supported |
 | Replay set of synthetic member-months | labelled synthetic, kept out of headline numbers |
-| Reminder delivery to a phone | not built. The schedule is computed and shown, nothing is sent |
-| Steward proposals on the deployed site | held in memory until a Redis store is connected. Cycle 2 was proposed and signed through the same API on a local server |
-| Unattended scheduled tick | route and workflow written, not yet recorded as a run |
+| Reminders and "your turn landed" notices | live in the app: sent by the keeper inside the interruption budget (2 a round, quiet 21:00 to 08:00, none after you paid), written to memory as `[reminder]` lines and shown on the circle page |
+| Phone push, email, SMS | not built |
+| Steward proposals on the deployed site | stored in a Vercel Blob store, so they survive across serverless instances |
+| Scheduled tick | GitHub Actions calls `/api/cron/tick` every 10 minutes. A manual run succeeded against the live site; the first scheduled run is recorded in docs/PROOF.md when it fires |
 | Demo members | the builder's own script wallets |
 
 ## Recovery
 
-App gone: `scripts/portable.ts` recalls the circle's memory with only a member key and the account id. Redis gone: state is disposable, the keeper replays events and relies on idempotency keys. Keeper dead: payout is permissionless, anyone can call it. Duplicate event: idempotency keys per outcome. Tatum out of credits: visible fallback to the public node, shown on `/proof` and `/api/status`.
+App gone: `scripts/portable.ts` recalls the circle's memory with only a member key and the account id. Store gone: state is disposable, the keeper replays events and relies on idempotency keys. Keeper dead: payout is permissionless, anyone can call it. Duplicate event: idempotency keys per outcome. Tatum out of credits: visible fallback to the public node, shown on `/proof` and `/api/status`.
 
 ## Findings and friction report
 

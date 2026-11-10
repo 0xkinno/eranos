@@ -19,4 +19,4 @@ One self-run round on 10 Nov 2026 against https://eranos.vercel.app and the repo
 | Heard fact confirmed by the wrong wallet, over different text, or by nobody | refused (`tests/policy.test.ts`) |
 | README links | all external links returned 200 to a fetch except Modern Ghana, which returns 403 to automated clients but was found by search |
 
-Open items found and not fixed: steward proposals are held in memory on the deployed site, so they can vanish between serverless instances until a Redis store is connected. The rate limiter is per instance, not global. Reminder delivery is not built.
+Found and fixed after this pass: steward proposals were held in memory on the deployed site and could vanish between serverless instances. The deployed state store is now a Vercel Blob store (round-trip probe on /api/status). Reminder delivery was added in the app; an early version could plan from an empty memory read and send a default reminder, which is now refused. Still open: the rate limiter is per instance, not global, and there is no phone push.

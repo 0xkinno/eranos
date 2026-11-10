@@ -11,11 +11,10 @@ Updated 2026-11-09 (submission closes 2026-11-10 17:00 UTC).
 
 ## Blocked on Kinnoski
 - GitHub secrets ERANOS_URL and CRON_SECRET (P13, unattended tick).
-- Upstash Redis URL and token (proposals and idempotency state persist only in memory on Vercel until then).
 - Publishing the blog post and the X post, recording the demo video, submitting the form.
 
 ## Not done
-30-write recall-lag study and points per round; a separate Seal key request after leaving; reminder delivery to phones; five-agent external red-team round; Tatum AI Builder award (not built with ai.tatum.io, not claimed).
+30-write recall-lag study and points per round; a separate Seal key request after leaving; phone push for reminders (in-app delivery is live); five-agent external red-team round; Tatum AI Builder award (not built with ai.tatum.io, not claimed).
 
 ## Self-judged scores (builder's view, not independent)
 Walrus and Tatum integration: strong on depth, with real limits listed. Technical quality: tests, CI gates, mainnet proof, honest misses. Creativity: a group-owned memory with enforced money and memory membership. Presentation: README, live proof, 60-second walk, guided tour; demo video still to record.
