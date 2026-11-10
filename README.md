@@ -8,6 +8,7 @@
 <a href="https://eranos.vercel.app">Live app</a> ·
 <a href="https://eranos.vercel.app/judge">60-second judge walk</a> ·
 <a href="https://eranos.vercel.app/proof">Live proof</a> ·
+<a href="https://youtu.be/LDSFkGjC_as">Demo video</a> ·
 <a href="docs/BLOG.md">Blog post</a> ·
 <a href="docs/EVIDENCE.md">Every transaction</a>
 </p>
@@ -32,7 +33,7 @@ It is live, on Sui mainnet, with real payments you can verify in under a minute.
 | **Live app** | [eranos.vercel.app](https://eranos.vercel.app) |
 | **Judges, no wallet needed** | [/judge](https://eranos.vercel.app/judge) (60 seconds) and the guided tour: [/?tour=1](https://eranos.vercel.app/?tour=1) |
 | **Proof, recomputed live** | [/proof](https://eranos.vercel.app/proof) |
-| **Demo video** | see [docs/SUBMISSION_TOTALRECALL.md](docs/SUBMISSION_TOTALRECALL.md) |
+| **Demo video** | [2:50 on YouTube](https://youtu.be/LDSFkGjC_as) |
 | **Blog post** | [docs/BLOG.md](docs/BLOG.md) |
 | **Track** | 03 Consumer Finance Apps. Also entered for Best Walrus Memory and Best Use of Agent Payments |
 | **Built with** | Walrus Memory SDK 0.1.14, Tatum Sui gateway and Data API, Sui mainnet package `0xf56a7c35676c7486b2078822f5b3ae58e383ac47b9c189fe77c3df3ea03fe42e` |
@@ -273,6 +274,6 @@ Built with AI coding assistants (Claude Code for the shipped code, plus a Tatum 
 
 ## Docs
 
-[TASK.md](TASK.md), [PROGRESS.md](PROGRESS.md), [docs/MILESTONE.md](docs/MILESTONE.md), [docs/EVIDENCE.md](docs/EVIDENCE.md), [docs/PROOF.md](docs/PROOF.md), [docs/FINDINGS.md](docs/FINDINGS.md), [docs/SDK_SURFACE.md](docs/SDK_SURFACE.md), [docs/PLATFORM_PROBE.md](docs/PLATFORM_PROBE.md), [DESIGN.md](DESIGN.md). Licence MIT.
+[PROGRESS.md](PROGRESS.md), [docs/MILESTONE.md](docs/MILESTONE.md), [docs/EVIDENCE.md](docs/EVIDENCE.md), [docs/PROOF.md](docs/PROOF.md), [docs/FINDINGS.md](docs/FINDINGS.md), [docs/SDK_SURFACE.md](docs/SDK_SURFACE.md), [docs/PLATFORM_PROBE.md](docs/PLATFORM_PROBE.md), [DESIGN.md](DESIGN.md). Licence MIT.
 
 **Tatum AI Builder:** entered as the optional item, with a plain disclosure in [docs/AI_BUILDER_PROMPT.md](docs/AI_BUILDER_PROMPT.md). The prompt was run on ai.tatum.io and produced a project shell. The shipped product was built with Claude Code, so we do not claim it was built primarily with ai.tatum.io.

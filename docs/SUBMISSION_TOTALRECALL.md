@@ -17,7 +17,7 @@ Live form fields were not copied (the form needs a login). Kinnoski to paste the
 | Sui package | 0xf56a7c35676c7486b2078822f5b3ae58e383ac47b9c189fe77c3df3ea03fe42e |
 | Memories on mainnet | see docs/FACTS.json (counted by scripts/facts.ts) |
 | Blog post URL | pending: Kinnoski publishes docs/BLOG.md on Medium or dev.to and pastes the link here |
-| Demo video | pending: record with `?tour=1&render=1` on the live site |
+| Demo video | https://youtu.be/LDSFkGjC_as |
 | X or LinkedIn post | text in docs/X_POST.md, Kinnoski publishes |
 | Built with Tatum AI Builder (optional item 06) | Yes, as disclosed: the Part 15 prompt was run on ai.tatum.io (project "Sui Savings Circle App") and produced a shell. The shipped product was built with Claude Code, so we do not say "primarily". See docs/AI_BUILDER_PROMPT.md |
 | Deadline | 10 Nov 2026, 17:00 UTC (18:00 WAT) |

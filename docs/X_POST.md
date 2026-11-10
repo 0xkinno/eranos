@@ -1,13 +1,20 @@
-# X and LinkedIn post (Kinnoski publishes)
+# X thread (Kinnoski publishes)
 
-Lucía's turn was July. The woman holding the tanda money stopped answering.
+Lucía paid $200 a month into a tanda for seven months. July was her turn. The woman holding the money stopped answering.
 
-Eranos is a savings circle with no collector: the money goes only to whoever's turn it is, and the circle owns its own memory. Joining adds a member's money rights and memory key in one Sui transaction. Leaving removes both.
+So we built Eranos: a savings circle with no collector, live on @SuiNetwork mainnet.
 
-Live on Sui mainnet, built for Total Recall with @WalrusFoundation Walrus Memory and @Tatum_io:
-https://eranos.vercel.app
+Demo: https://youtu.be/LDSFkGjC_as [thread emoji] 1/3
 
-Judge walk, no wallet needed: https://eranos.vercel.app/judge
-Code: https://github.com/0xkinno/eranos
 
-#TotalRecall
+Each member pays from their own wallet. A contract pays the pot only to whoever's turn it is, once everyone has paid.
+
+The circle's memory lives on @WalrusProtocol, owned by three stewards. Joining adds a money seat and a memory key in one transaction. Leaving removes both. 2/3
+
+
+@Tatum_io reads, simulates and executes every step. When we faked a payment, Tatum said "not found" and the keeper wrote nothing.
+
+41 payments, 9 payouts, 62 memories on mainnet.
+
+Try it: https://eranos.vercel.app/judge
+Code: github.com/0xkinno/eranos 3/3

@@ -13,7 +13,7 @@ Updated 2026-11-09 (submission closes 2026-11-10 17:00 UTC).
 
 ## Blocked on Kinnoski
 - GitHub secrets ERANOS_URL and CRON_SECRET (P13, unattended tick).
-- Publishing the blog post and the X post, recording the demo video, submitting the form.
+- Publishing the blog post and the X post, submitting the form.
 
 ## Not done
 30-write recall-lag study and points per round; a separate Seal key request after leaving; phone push for reminders (in-app delivery is live); five-agent external red-team round; Tatum AI Builder award (not built with ai.tatum.io, not claimed).

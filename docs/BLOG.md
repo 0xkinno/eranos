@@ -39,4 +39,6 @@ Member 2 paid late in rounds 2 and 3 of the first cycle. The keeper recorded the
 - A Walrus write takes about 20 seconds to confirm. A different delegate could recall that write about 2.6 seconds later in each of our two measurements (we did not run the 30-write study).
 - Removing a key is forward only. It does not take back what a member already read, and we say so.
 
+Demo film: https://youtu.be/LDSFkGjC_as
+
 Code: https://github.com/0xkinno/eranos · Proof: https://eranos.vercel.app/proof
