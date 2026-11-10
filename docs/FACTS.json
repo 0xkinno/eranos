@@ -1,9 +1,17 @@
 {
-  "generatedAt": "2026-11-10T07:35:29.875Z",
+  "generatedAt": "2026-11-10T07:45:57.194Z",
+  "package": "0xf56a7c35676c7486b2078822f5b3ae58e383ac47b9c189fe77c3df3ea03fe42e",
+  "circle": {
+    "id": "0xd50b0e10438c1fe18bc1f9896788080fc7662de94954da7ddfa1209ae13c4475",
+    "members": 5,
+    "contributionUsdc": 0.1
+  },
   "memories": {
-    "total": 15,
+    "total": 20,
     "byNamespace": {
-      "known": 15
+      "known": 17,
+      "heard": 2,
+      "scribe": 1
     }
   },
   "chain": {
@@ -14,15 +22,16 @@
     "sponsoredContributions": 7
   },
   "tests": {
-    "vitest": 61,
+    "vitest": 62,
     "move": 24
   },
   "tatumCalls": {
-    "Events": 2
+    "Events": 3,
+    "multiGetObjects": 1
   },
   "gas": {
     "sampleCount": 12,
     "avgMist": 1491561
   },
-  "usdcUsd": 0.99896573
+  "usdcUsd": 0.99904769
 }

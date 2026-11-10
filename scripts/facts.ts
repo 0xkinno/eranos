@@ -26,6 +26,8 @@ import { usdcRate } from "@/lib/tatum/data";
   const gas = ev.filter((e) => e.gas).map((e) => Number(e.gas.computationCost) + Number(e.gas.storageCost) - Number(e.gas.storageRebate));
   const facts = {
     generatedAt: new Date().toISOString(),
+    package: pkg,
+    circle: { id: process.env.DEMO_CIRCLE_ID, members: (((await t.getCircle(process.env.DEMO_CIRCLE_ID!)).json as { members: string[] }).members).length, contributionUsdc: Number(((await t.getCircle(process.env.DEMO_CIRCLE_ID!)).json as { contribution: string }).contribution) / 1e6 },
     memories: { total, byNamespace: byNs },
     chain: { contributions: contribs.length, payouts: payouts.length, joinTransactions: sum(/^join member/), x402Payments: sum(/^x402 agent payment/), sponsoredContributions: sum(/pays round/) },
     tests: { vitest, move: moveTests },

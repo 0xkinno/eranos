@@ -16,5 +16,5 @@ import { buildPayoutTx } from "@/lib/sui/ptb";
     payout: async (round) => { const o = await execSingle(buildPayoutTx({ eranosPkg: process.env.ERANOS_PKG!, sender: keeper.toSuiAddress(), circleId: process.env.DEMO_CIRCLE_ID!, round }), keeper); if (!o.success) throw new Error(o.error); evidence(`keeper payout round ${round}`, o.digest); return { digest: o.digest }; },
   });
   console.log(JSON.stringify(rep, null, 1));
-  evidence("keeper tick run" + (process.env.ERANOS_SABOTAGE ? ` (sabotage=${process.env.ERANOS_SABOTAGE})` : ""), "tick", { report: rep });
+  if (rep.written.length || rep.payouts.length || rep.refused.length) evidence("keeper tick run" + (process.env.ERANOS_SABOTAGE ? ` (sabotage=${process.env.ERANOS_SABOTAGE})` : ""), "tick", { report: rep });
 })().catch((e) => { console.error(String(e?.message ?? e).slice(0, 900)); process.exit(1); });
