@@ -39,7 +39,7 @@ It is live, on Sui mainnet, with real payments you can verify in under a minute.
 
 ## Why this is different
 
-Every other savings app we looked at keeps the user's memory in an account the app owns. Eranos does the reverse, and enforces it where it cannot be argued with:
+Memory products usually keep the user's memory in an account the app owns, and the user is a tenant. Eranos does the reverse, and enforces it where it cannot be argued with:
 
 1. **The circle owns its memory.** One Walrus Memory account per circle, owned by a 2-of-3 steward multisig. Every member holds their own delegate key, derived from their own wallet signature.
 2. **Money and memory move together.** Joining adds the member's key to the memory account and puts them on the contract's roll in one transaction. The contract reads the memory account and refuses to admit a member who has no memory key. It refuses to remove one who still has it. The two rolls cannot drift apart, and `/proof` checks that live.
@@ -63,8 +63,11 @@ Reality rung: **Sui mainnet, capped funds.** The demo circle has {{facts.circle.
 | Cycle 1 starts | {{tx:start cycle}} |
 | Contributions with sponsored gas ({{facts.chain.sponsoredContributions}}) | see [/proof](https://eranos.vercel.app/proof) |
 | Agent payments over x402 ({{facts.chain.x402Payments}}) | {{txs:x402 agent payment}} |
+| Payment from a browser wallet on the deployed site (sponsored gas, x402) | {{tx:UI payment}} |
 | First payout | {{tx:keeper payout round 0}} |
 | Leave: key removed with the member | {{tx:leave}} |
+| Cycle 2 starts: the planner's order, signed by two stewards | {{tx:start cycle 2}} |
+| Payout before a round is full | refused at Tatum's pre-execution check, abort code 6 `ERoundNotFull` |
 | Admit without a memory key | refused at Tatum's pre-execution check, abort code 12 `EMemoryNotGranted` |
 
 ## The problem
@@ -178,6 +181,8 @@ Every Sui read and write goes through the Tatum GraphQL gateway (`lib/tatum/sui.
 |---|---|
 | Pay the pot to anyone but the scheduled member | `circle::payout`, only `order[round]` |
 | Pay out before the round is full | `ERoundNotFull` (6) |
+| Cycle 2 starts: the planner's order, signed by two stewards | {{tx:start cycle 2}} |
+| Payout before a round is full | refused at Tatum's pre-execution check, abort code 6 `ERoundNotFull` |
 | Admit without a memory key | `EMemoryNotGranted` (12) |
 | Remove while the memory key remains | `EMemoryNotRevoked` (13) |
 | Change membership mid-cycle | `ENotBetweenCycles` (10) |

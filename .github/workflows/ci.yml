@@ -13,4 +13,5 @@ jobs:
         env:
           BANNED_NAMES: ${{ secrets.BANNED_NAMES }}
       - run: npx tsc --noEmit
+      - run: npx tsx scripts/render-readme.ts --check
       - run: npx vitest run
