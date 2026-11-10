@@ -33,7 +33,7 @@ export function proposeOrder(p: { members: Joined[]; memories: StoredMemory[]; m
   for (const m of rest) {
     while (slots[k]) k++;
     const i = info.get(m.member)!;
-    slots[k] = { member: m.member, round: k, reason: i.late > 0 ? `paid ${i.late.toFixed(1)} h late on average, so draws later` : i.outs.length ? "paid on time in every recorded round" : "no history yet: join order", cited: i.late > 0 ? i.lateIds : i.outs.map((o) => o.id) };
+    slots[k] = { member: m.member, round: k, reason: i.late > 0 ? `paid ${i.late.toFixed(2)} h late on average, so draws later` : i.outs.length ? "paid on time in every recorded round" : "no history yet: join order", cited: i.late > 0 ? i.lateIds : i.outs.map((o) => o.id) };
   }
   return slots as OrderEntry[];
 }

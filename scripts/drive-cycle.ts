@@ -5,8 +5,8 @@ import { T } from "./chain";
 const CIRCLE = process.env.DEMO_CIRCLE_ID!, PKG = process.env.ERANOS_PKG!;
 const run = (c: string) => { try { return execSync(c, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"], timeout: 280_000 }); } catch (e) { return String((e as { stdout?: string }).stdout ?? e).slice(-300); } };
 const lateM2 = new Set([1, 2]);
-// Member 5 round 3 is left for the Playwright wallet test to pay through the UI. The driver pays it itself if still unpaid 4 minutes before the deadline.
-const heldForUi = (m: number, r: number, now: number, deadline: number) => m === 5 && r === 3 && now < deadline - 240_000;
+// Member 5 round 5 is left for the Playwright wallet test to pay through the UI. The driver pays it itself if still unpaid 4 minutes before the deadline.
+const heldForUi = (m: number, r: number, now: number, deadline: number) => m === 5 && r === 4 && now < deadline - 240_000;
 (async () => {
   const circ = (await T.getCircle(CIRCLE)).json as { cycle_start_ms: string; round_ms: string; members: string[] };
   const start = Number(circ.cycle_start_ms), rms = Number(circ.round_ms), n = circ.members.length;

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useDAppKit, useWalletConnection } from "@mysten/dapp-kit-react";
 import { Glow } from "@/components/Glow";
 import { deriveMemberKey } from "@/lib/memory/derive-key";
+import { PageHero } from "@/components/PageHero";
 
 export default function JoinPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -24,9 +25,8 @@ export default function JoinPage({ params }: { params: Promise<{ id: string }> }
     } catch (e) { setState(String((e as Error).message).slice(0, 200)); } finally { setBusy(false); }
   };
   return (
-    <div className="app wrap" style={{ maxWidth: 760 }}>
-      <p className="eyebrow">Join</p><h1 style={{ fontSize: "clamp(2rem,5vw,3rem)", marginTop: 8 }}>Join this circle in three steps</h1>
-      <div className="row" style={{ marginTop: 10 }}><Link href={`/c/${id}`} className="pill" style={{ minHeight: 44, display: "inline-flex" }}>Back to the circle</Link></div>
+    <div className="app wrap" style={{ maxWidth: 860 }}>
+      <PageHero eyebrow="Join" title={<>Join in <em className="serif">three steps</em></>}><Link href={`/c/${id}`} className="pill" style={{ minHeight: 44, display: "inline-flex" }}>Back to the circle</Link></PageHero>
       <div style={{ display: "grid", gap: 16, marginTop: 24 }}>
         <Glow><h3>1. Connect your wallet</h3><p className="muted" style={{ marginTop: 8 }}>{me ? <>Connected as <span className="mono">{me.slice(0, 10)}…</span></> : "Use Connect wallet in the top bar. Use an Ed25519 wallet such as Slush or Suiet."}</p></Glow>
         <Glow><h3>2. Create your memory key</h3><p className="muted" style={{ marginTop: 8 }}>One signature creates your key to this circle's memory. It moves no money and is never stored. The same wallet re-creates the same key on any device.</p>

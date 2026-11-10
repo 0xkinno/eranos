@@ -2,12 +2,13 @@ import Link from "next/link";
 import { Glow } from "@/components/Glow";
 import { TurnRing } from "@/components/TurnRing";
 import { circleView } from "@/lib/facts/stats";
+import { PageHero } from "@/components/PageHero";
 export const revalidate = 15;
 export default async function MyCircles() {
   const c = await circleView().catch(() => null);
   return (
     <div className="app wrap">
-      <p className="eyebrow">My circles</p><h1 style={{ fontSize: "clamp(2rem,5vw,3.25rem)", marginTop: 8 }}>Your circles</h1>
+      <PageHero eyebrow="My circles" title={<>Your <em className="serif">circles</em></>}><p className="muted" style={{ maxWidth: "52ch" }}>Every circle you belong to, with whose turn it is and what is due. Your wallet decides which circles show here.</p></PageHero>
       <div className="cards two" style={{ marginTop: 24 }}>
         {c ? (
           <Link href={`/c/${c.id}`} style={{ textDecoration: "none", color: "inherit" }} data-testid="circle-card"><Glow>

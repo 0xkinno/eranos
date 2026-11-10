@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useDAppKit, useWallets, useWalletConnection } from "@mysten/dapp-kit-react";
 import { Power, Wallet, Menu, Close } from "./icons";
 
-const LINKS = [["How it works", "/#how"], ["Proof", "/proof"], ["Security", "/#security"], ["Docs", "https://github.com/0xkinno/eranos#readme"]] as const;
+const LINKS = [["How it works", "/#how"], ["Memory", "/#memory"], ["Proof", "/proof"], ["Judges", "/judge"], ["Docs", "https://github.com/0xkinno/eranos#readme"]] as const;
 const short = (a: string) => `${a.slice(0, 6)}…${a.slice(-4)}`;
 
 export function useUsdc(address?: string) {

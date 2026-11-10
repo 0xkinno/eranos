@@ -81,13 +81,13 @@ export function planMember(p: {
       if (late > 0) second = Math.min(second, first + Math.max(span * 0.05, 0));
       reminders = [
         { atMs: first, reason: `payday on the ${f2(pf.f)}: first reminder when the money arrives`, cited: [pf.f.id] },
-        { atMs: Math.max(second, first), reason: late > 0 ? `paid ${late.toFixed(1)} h late on average: second reminder follows quickly` : "second reminder before the deadline", cited: late > 0 ? [pf.f.id, ...lateIds] : [pf.f.id] },
+        { atMs: Math.max(second, first), reason: late > 0 ? `paid ${late.toFixed(2)} h late on average: second reminder follows quickly` : "second reminder before the deadline", cited: late > 0 ? [pf.f.id, ...lateIds] : [pf.f.id] },
       ];
       used = true;
     } else if (outcomes.length) {
       const late = ewmaLateness(outcomes);
       if (late > 0) {
-        reminders = [defaults[0], { atMs: Math.max(p.round.openMs, p.round.deadlineMs - Math.min(24 * HOUR, span / 2) - late * HOUR), reason: `usually ${late.toFixed(1)} h late: second reminder moved earlier`, cited: outcomes.map((o) => o.id) }];
+        reminders = [defaults[0], { atMs: Math.max(p.round.openMs, p.round.deadlineMs - Math.min(24 * HOUR, span / 2) - late * HOUR), reason: `usually ${late.toFixed(2)} h late: second reminder moved earlier`, cited: outcomes.map((o) => o.id) }];
         used = true;
       }
     }

@@ -7,6 +7,7 @@ import { deriveMemberKey } from "@/lib/memory/derive-key";
 import { confirmMessage, rejectMessage } from "@/lib/memory/policy";
 import { formatLine } from "@/lib/memory/format";
 import { memberMemory } from "@/lib/memory/client";
+import { PageHero } from "@/components/PageHero";
 
 interface Mem { id: string; type: string; attrs: Record<string, string>; text: string; date: string }
 const TABS = ["Known", "Heard", "Keeper"] as const;
@@ -76,9 +77,7 @@ export default function MemoryPage({ params }: { params: Promise<{ id: string }>
   const list = tab === "Known" ? (known ?? []).filter((m) => !keeperTypes.includes(m.type)) : tab === "Keeper" ? (known ?? []).filter((m) => keeperTypes.includes(m.type)) : heard ?? [];
   return (
     <div className="app wrap">
-      <p className="eyebrow">Circle memory · owned by the stewards, read by members</p>
-      <h1 style={{ fontSize: "clamp(2rem,5vw,3.25rem)", marginTop: 8 }}>What the circle remembers</h1>
-      <div className="row" style={{ marginTop: 12 }}><Link href={`/c/${id}`} className="pill" style={{ minHeight: 44, display: "inline-flex" }}>Back to the circle</Link></div>
+      <PageHero eyebrow="Circle memory · owned by the stewards, read by members" title={<>What the circle <em className="serif">remembers</em></>}><Link href={`/c/${id}`} className="pill" style={{ minHeight: 44, display: "inline-flex" }}>Back to the circle</Link></PageHero>
       <div className="tabs" role="tablist">{TABS.map((t) => <button key={t} role="tab" aria-selected={tab === t} onClick={() => setTab(t)} data-testid={`tab-${t}`}>{t}</button>)}</div>
       <p className="muted" style={{ maxWidth: "62ch" }}>{tab === "Known" ? "Confirmed facts. Every decision reads only these." : tab === "Heard" ? "Candidate facts a model extracted from pasted chat. They change nothing until the person they are about signs." : "Verified payments, payouts and reminder results written by the keeper after checking the chain through Tatum."}</p>
       <div style={{ display: "grid", gap: 10, marginTop: 16 }} data-testid="mem-list">

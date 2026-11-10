@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Glow } from "@/components/Glow";
 import { circleView } from "@/lib/facts/stats";
+import { PageHero } from "@/components/PageHero";
 export const revalidate = 20;
 export default async function Judge() {
   const c = await circleView().catch(() => null);
@@ -15,8 +16,7 @@ export default async function Judge() {
   ];
   return (
     <div className="app wrap">
-      <p className="eyebrow">For judges</p><h1 style={{ fontSize: "clamp(2rem,5vw,3.5rem)", marginTop: 8 }}>The 60-second walk</h1>
-      <p className="muted" style={{ marginTop: 12, maxWidth: "60ch" }}>A real circle on Sui mainnet with real payments. No wallet is needed for steps 1 to 5.</p>
+      <PageHero eyebrow="For judges" title={<>The 60-second <em className="serif">walk</em></>}><p className="muted" style={{ maxWidth: "60ch" }}>A real circle on Sui mainnet with real payments. No wallet is needed for steps 1 to 5.</p></PageHero>
       <ol style={{ listStyle: "none", padding: 0, margin: "28px 0 0", display: "grid", gap: 14 }}>
         {steps.map(([t, href, cta, d], i) => (
           <li key={i}><Glow data-testid={`step-${i + 1}`}><div className="row" style={{ justifyContent: "space-between" }}><div><span className="mono muted">Step {i + 1}</span><h3 style={{ marginTop: 4 }}>{t}</h3><p className="muted" style={{ marginTop: 6 }}>{d}</p></div><Link href={href} className="btn ghost">{cta}</Link></div></Glow></li>))}

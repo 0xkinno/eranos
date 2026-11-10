@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Glow } from "@/components/Glow";
 import { circleView, evidence, liveStats, factsFile } from "@/lib/facts/stats";
 import { tatum } from "@/lib/tatum/sui";
+import { PageHero } from "@/components/PageHero";
 
 export const revalidate = 20;
 const scan = (d: string) => `https://suiscan.xyz/mainnet/tx/${d}`;
@@ -14,9 +15,7 @@ export default async function Proof() {
   const st = tatum().status();
   return (
     <div className="app wrap">
-      <p className="eyebrow">Proof · recomputed from live reads</p>
-      <h1 style={{ fontSize: "clamp(2rem,5vw,3.5rem)", marginTop: 8 }}>Verify it yourself</h1>
-      <p className="muted" style={{ marginTop: 12, maxWidth: "64ch" }}>Every row below is a Sui mainnet transaction or a Walrus blob. The reality rung is capped funds: the demo circle pays 0.1 USDC per member per 20-minute round. A real circle runs monthly.</p>
+      <PageHero eyebrow="Proof · recomputed from live reads" title={<>Verify it <em className="serif">yourself</em></>}><p className="muted" style={{ maxWidth: "64ch" }}>Every row below is a Sui mainnet transaction or a Walrus blob. The reality rung is capped funds: the demo circle pays 0.1 USDC per member per 20-minute round. A real circle runs monthly.</p></PageHero>
       <div className="cards" style={{ marginTop: 24 }}>
         <Glow data-testid="roll"><p className="eyebrow">Membership agreement</p><div className="big" style={{ marginTop: 8 }}>{c ? `${c.roll.money} of ${c.roll.memory}` : "…"}</div><p className="mono muted" style={{ marginTop: 6 }}>{c?.roll.agree ? "Money roll and memory roll agree, read live through Tatum." : "Rolls disagree."} Access counter {c?.roll.accessCounter ?? "…"}.</p></Glow>
         <Glow><p className="eyebrow">Provider</p><div className="big" style={{ marginTop: 8 }}>{st.provider === "tatum" ? "Tatum" : "Fallback"}</div><p className="mono muted" style={{ marginTop: 6 }}>{st.provider === "tatum" ? `${st.tatumCallTotal} gateway calls served by this instance.` : `Tatum answered with a plan limit: ${st.fallbackReason}. Reading from the public Sui node.`}</p></Glow>

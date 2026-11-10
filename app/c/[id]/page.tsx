@@ -5,6 +5,8 @@ import { useDAppKit, useWalletConnection } from "@mysten/dapp-kit-react";
 import { TurnRing } from "@/components/TurnRing";
 import { Glow } from "@/components/Glow";
 import { payRoundX402 } from "@/lib/client/pay";
+import { PageHero } from "@/components/PageHero";
+import { IconShield, IconKey, IconClock } from "@/components/art";
 import type { CircleView } from "@/lib/facts/stats";
 
 const short = (a: string) => `${a.slice(0, 6)}…${a.slice(-4)}`;
@@ -47,13 +49,11 @@ export default function CirclePage({ params }: { params: Promise<{ id: string }>
   };
   return (
     <div className="app wrap">
-      <p className="eyebrow">Circle · cycle {c.cycle} · round {round + 1} of {c.members.length}</p>
-      <h1 style={{ fontSize: "clamp(2rem,5vw,3.25rem)", marginTop: 8 }}>{c.name}</h1>
-      <ClientTabs id={id} />
+      <PageHero eyebrow={`Circle · cycle ${c.cycle} · round ${round + 1} of ${c.members.length}`} title={c.name}><ClientTabs id={id} /></PageHero>
       <div className="cards two" style={{ marginTop: 24 }}>
         <Glow data-testid="ring-card">
           <TurnRing n={c.members.length} paid={c.members.map((m) => paidNow.includes(m))} turn={turnIdx} labels={c.members.map((_, i) => String(i + 1))} />
-          <p className="mono muted" style={{ marginTop: 8 }}>Violet beads have paid. The ember bead is whose turn it is.</p>
+          <p className="mono muted" style={{ marginTop: 8 }}>Blue beads have paid. The ember bead is whose turn it is.</p>
         </Glow>
         <Glow>
           <p className="eyebrow">This round</p>
@@ -76,6 +76,17 @@ export default function CirclePage({ params }: { params: Promise<{ id: string }>
           <tr key={r} data-testid={`round-${r}`}><td>{r + 1}</td><td>Member {c.members.indexOf(m) + 1} <span className="mono muted">{short(m)}</span></td><td>{n} of {c.members.length}</td>
             <td>{po ? <a href={`https://suiscan.xyz/mainnet/tx/${po.digest}`}>paid out · {po.digest.slice(0, 8)}…</a> : r > round ? "not open" : n === c.members.length ? "ready to pay out" : `waiting: ${c.members.length - n} to pay`}</td></tr>); })}
       </tbody></table></div>
+      <h2 style={{ marginTop: 48, fontSize: "1.75rem" }}>Members</h2>
+      <div className="cards" style={{ marginTop: 14 }} data-testid="roster">
+        {c.members.map((m, i) => (
+          <Glow key={m}><div className="row" style={{ justifyContent: "space-between" }}>
+            <div className="row" style={{ gap: 12 }}><span className="account" style={{ minHeight: 40, padding: 6 }}><span className="ring" style={{ width: 26, height: 26, background: i === turnIdx ? "var(--ember)" : paidNow.includes(m) ? "var(--sui-deep)" : undefined }} /></span><div><strong>Member {i + 1}</strong><div className="mono muted">{short(m)}</div></div></div>
+            <span className={`pill ${paidNow.includes(m) ? "verified" : ""}`}>{paidNow.includes(m) ? "paid" : "due"}</span></div></Glow>))}
+      </div>
+      <div className="cards" style={{ marginTop: 28 }}>
+        {[[<IconShield key="a" />, "The pot cannot be redirected", "The contract pays order[round] and no one else, and only after every member has paid."], [<IconKey key="b" />, "Your key, your signature", "You pay from your own wallet. The circle covers the fee but never signs for you."], [<IconClock key="c" />, "Reminders on your schedule", "At most two a round, never between 21:00 and 08:00, timed to when you told the circle money arrives."]].map(([ic, t, p], i) => (
+          <Glow key={i}><div className="icon-tile">{ic}</div><h3>{t}</h3><p className="muted" style={{ marginTop: 8 }}>{p}</p></Glow>))}
+      </div>
       <div className="notice" style={{ marginTop: 28 }} data-testid="roll-card">
         <span className="pill verified">checked live through Tatum</span> Money roll and memory roll {c.roll.agree ? "agree" : "DISAGREE"}: {c.roll.money} members hold money rights, {c.roll.memory} hold memory keys. Access counter {c.roll.accessCounter}.
         <span className="mono muted"> · data provider: {c.provider === "tatum" ? "Tatum" : "public Sui node (Tatum fallback active)"}</span>

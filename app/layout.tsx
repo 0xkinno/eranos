@@ -4,6 +4,8 @@ import { Providers } from "@/components/Providers";
 import { Nav } from "@/components/Nav";
 import { Tour } from "@/components/Tour";
 import { Suspense } from "react";
+import { Footer } from "@/components/Footer";
+import { Smooth } from "@/components/Smooth";
 
 export const metadata = {
   title: "Eranos: a savings circle with no collector",
@@ -14,7 +16,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en"><body>
       <a href="#main" style={{ position: "absolute", left: -999 }}>Skip to content</a>
-      <Providers><Nav /><main id="main">{children}</main><Suspense fallback={null}><Tour /></Suspense></Providers>
+      <Providers><Nav /><Smooth /><main id="main">{children}</main><Footer /><Suspense fallback={null}><Tour /></Suspense></Providers>
     </body></html>
   );
 }

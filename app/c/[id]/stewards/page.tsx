@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useDAppKit, useWalletConnection } from "@mysten/dapp-kit-react";
 import { Glow } from "@/components/Glow";
 import { Transaction } from "@mysten/sui/transactions";
+import { PageHero } from "@/components/PageHero";
 
 interface P { id: string; kind: string; summary: string; digest: string; partials: string[]; executed?: { digest: string; ok: boolean }; reasons?: { member: string; round: number; reason: string; cited: string[] }[] }
 export default function Stewards({ params }: { params: Promise<{ id: string }> }) {
@@ -31,8 +32,7 @@ export default function Stewards({ params }: { params: Promise<{ id: string }> }
   };
   return (
     <div className="app wrap">
-      <p className="eyebrow">Stewards · three keys, any two sign</p><h1 style={{ fontSize: "clamp(2rem,5vw,3.25rem)", marginTop: 8 }}>Proposals to sign</h1>
-      <div className="row" style={{ marginTop: 10 }}><Link href={`/c/${id}`} className="pill" style={{ minHeight: 44, display: "inline-flex" }}>Back to the circle</Link></div>
+      <PageHero eyebrow="Stewards · three keys, any two sign" title={<>Proposals <em className="serif">to sign</em></>}><Link href={`/c/${id}`} className="pill" style={{ minHeight: 44, display: "inline-flex" }}>Back to the circle</Link></PageHero>
       <p className="muted" style={{ marginTop: 14, maxWidth: "62ch" }}>Each proposal is built once. Every steward signs the same bytes, and the digest shown here is the digest of those bytes. Steward wallets must be Ed25519 accounts. zkLogin accounts are not supported in the multisig.</p>
       <div className="row" style={{ marginTop: 18 }}><button className="btn" disabled={busy} onClick={() => propose("on")} data-testid="propose-on">Propose next cycle order (memory on)</button><button className="btn ghost" disabled={busy} onClick={() => propose("off")}>Memory off</button></div>
       {msg ? <div className="notice" style={{ marginTop: 14 }} role="status">{msg}</div> : null}

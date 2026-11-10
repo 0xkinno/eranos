@@ -15,7 +15,11 @@
     "e2e": "playwright test --trace off"
   },
   "dependencies": {
+    "@fontsource/bricolage-grotesque": "^5.3.0",
     "@fontsource/geist-mono": "^5.3.0",
+    "@fontsource/hanken-grotesk": "^5.3.0",
+    "@fontsource/instrument-serif": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
     "@mysten-incubation/memwal": "0.1.14",
     "@mysten/dapp-kit-react": "^2.1.45",
     "@mysten/seal": "latest",

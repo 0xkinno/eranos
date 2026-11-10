@@ -24,7 +24,7 @@ export function MemoryCompare({ members }: { members: string[] }) {
     <Glow data-testid="memory-compare">
       <div className="row" style={{ justifyContent: "space-between" }}>
         <div className="row" role="group" aria-label="Choose member">
-          {members.map((x, i) => <button key={x} className="pill" style={{ minHeight: 44, cursor: "pointer", background: i === idx ? "#5B3DF5" : "#fff", color: i === idx ? "#fff" : undefined }} onClick={() => setIdx(i)} aria-pressed={i === idx}>Member {i + 1}</button>)}
+          {members.map((x, i) => <button key={x} className="pill" style={{ minHeight: 44, cursor: "pointer", background: i === idx ? "#1B66CC" : "#fff", color: i === idx ? "#fff" : undefined }} onClick={() => setIdx(i)} aria-pressed={i === idx}>Member {i + 1}</button>)}
         </div>
         <button className="btn ghost" role="switch" aria-checked={on} data-testid="memory-switch" onClick={() => setOn(!on)}>Memory {on ? "on" : "off"}</button>
       </div>
