@@ -27,3 +27,13 @@ describe("memory format", () => {
     expect(visibleKnown([a, r1]).length).toBe(0);
   });
 });
+
+import { heardLine } from "@/lib/memory/heard";
+describe("scribe line parsing", () => {
+  it("parses payday, percent and round deterministically", () => {
+    expect(heardLine({ text: "She is paid after the 5th", about: "0xa", date: "2026-11-10" }).attrs.payday).toBe("5");
+    expect(heardLine({ text: "money is there about 70 percent in", about: "0xa", date: "2026-11-10" }).attrs.pays_at).toBe("0.70");
+    expect(heardLine({ text: "needs the pot early, in round 1", about: "0xa", date: "2026-11-10" }).attrs.needs_round).toBe("0");
+    expect(heardLine({ text: "likes tea", about: "0xa", date: "2026-11-10" }).attrs).toEqual({ from: "chat", about: "0xa" });
+  });
+});

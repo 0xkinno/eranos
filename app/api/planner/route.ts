@@ -7,8 +7,9 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 let cache: { at: number; body: unknown } | null = null;
 
-export async function GET() {
-  if (cache && Date.now() - cache.at < 45_000) return NextResponse.json(cache.body);
+export async function GET(req: Request) {
+  const fresh = new URL(req.url).searchParams.get("fresh") === "1";
+  if (!fresh && cache && Date.now() - cache.at < 180_000) return NextResponse.json(cache.body);
   try {
     const c = await circleView(CIRCLE_ID);
     const mem = await readKnown(keeperMemory(MEMORY_ACCOUNT_ID, "known"));
